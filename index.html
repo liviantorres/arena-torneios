@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Arena Torneios</title>
     <link rel="shortcut icon" href="imagens/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/CSS/estilizacao.css">
@@ -40,26 +40,44 @@
           </div>
         </div>
       </nav>
-      <div class="container text-light" style="margin-right: 45px; margin-top: 40px; width: 400px; height: 400px; background-color: #161642;">
+      <div class="d-flex ">
+      <div class="container-fluid d-flex justify-content-around" style="width: 700px; height: 400px; margin-top: 40px;">
+        <div class="text-light lh-1" style="font-size: 84px; margin-top: 90px;">
+          
+        <b>ARENA
+        TORNEIOS
+        </b><br><br>
+        <div class="text-light fw-lighter" style="font-size: 18px ;">
+        <p>Tranformando Organização em Vitória:</p>
+        <p>Seu Campeonato, Nosso Gerenciamento!</p>
+        
+        </div></div>
+        <img src="imagens/trofeu.png" alt="troféu" width="287" height="344" style="margin-top: 60px;">
+      </div>
+      <div class="container text-light" style="margin-top: 40px; width: 420px; height: 520px; background-color:
+       #161642; padding: 70px; ">
       <form>
-        <legend style="margin-top: 15px;"><b>Entrar</b></legend>
-        <hr style="opacity: 100%;">
+        <legend style="margin-top: -25px; font-size: 38px;"><b>Entrar</b></legend>
+        <hr style="opacity: 100%;"><br>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email:</label>
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
+        </div><br>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Senha:</label>
           <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
+        </div><br>
         <div class="d-grid gap-2 col-12 mx-auto">
-          <button class="btn btn-warning" type="button" style="color: #4d3601;""><b>ENTRAR</b></button>
+          <button class="btn btn-warning" type="button" 
+          style="color: #4d3601; --bs-btn-hover-bg: #A57300; ">
+            <b>ENTRAR</b></button>
         </div>
         <br>
         <p class="text-center" style="font-size: 13px;">Não possui uma conta ainda?</p>
         
         <p class="text-center fs-5"><a href="" style="color: #ccf03b;"> Registrar-se</a></p>
       </form>
+      </div>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
