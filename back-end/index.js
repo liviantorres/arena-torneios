@@ -15,8 +15,12 @@ app.use(express.json());
 
 // rotas api
 const userRoutes = require('./routes/userRoutes')
+const jogadorRoutes = require('./routes/JogadorRoutes')
+const timeRoutes = require('./routes/TimeRoutes')
 
 app.use('/usuario', userRoutes)
+app.use('/jogador', jogadorRoutes)
+app.use('/time', timeRoutes)
 
 // rota inicial / endpoint
 app.get('/', (req, res) => {

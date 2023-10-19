@@ -3,18 +3,31 @@ const router = require('express').Router();
 
 const User = require('../models/User')
 
-// Create - Criar usuario
-router.post('/', async (req, res) => {
+// Registrar Usuario
+router.post('/register', async (req, res) => {
     const {nome, email, senha} = req.body
 
     if(!nome){
         res.status(422).json({error: 'O nome é obrigatório!'})
+        return
     }else if(!email){
         res.status(422).json({error: 'O email é obrigatório!'})
+        return
     }else if(!senha){
         res.status(422).json({error: 'A senha é obrigatória!'})
-    };
+        return
+    }
 
+
+    // Verifica se o email já existe no sistema
+    try {
+            const user = await User.findOne({email});
+            if(user){
+                return res.json({message: 'Email já cadastrado'})
+            }
+    } catch (error) {
+        res.status(500).json({ message: 'Erro no servidor' });
+    }
 
     const user = {
         nome, email, senha
@@ -31,7 +44,39 @@ router.post('/', async (req, res) => {
     }
 })
 
-// Read 
+
+// Verifica Login do Usuário
+router.post('/login', async (req, res) => {
+    const {email, senha} = req.body
+
+    if(!email){
+        res.status(422).json({error: 'O nome é obrigatório!'})
+        return
+    }else if(!senha){
+        res.status(422).json({error: 'O email é obrigatório!'})
+        return
+    }
+
+    // Checar se o usuario existe
+    const user = await User.findOne({email});
+    if(!user){
+        return res.status(400).json({message: 'Usuário não existe no sistema'})
+    }
+    if(user.senha != senha){
+        return res.status(400).json({message: 'Senha Inválida'})
+    }
+
+    try {
+        return res.status(201).json({message: 'Usuário entrou!'})
+    } catch (error) {
+        res.status(500).json({ message: 'Erro no serviddor' });
+    }
+
+})
+
+
+
+// Mostrar Usuários 
 router.get('/', async (req, res) => {
  try {
     const usuario = await User.find();
@@ -42,6 +87,7 @@ router.get('/', async (req, res) => {
  }
 })
 
+// Mostrar Usuário por ID
 router.get('/:id', async (req, res)=>{
     const id = req.params.id
 
@@ -59,7 +105,7 @@ router.get('/:id', async (req, res)=>{
     }
 })
 
-// Update
+// Atualizar Usuários
 router.patch('/:id', async (req, res)=>{
 
     const id = req.params.id
@@ -85,7 +131,7 @@ router.patch('/:id', async (req, res)=>{
     }
 })
 
-//Delete
+//Deletar Usuários
 router.delete('/:id', async (req, res)=>{
     const id = req.params.id
 

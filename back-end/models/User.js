@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const User = mongoose.model('User', {
-    nome: String,
+    nome: {type: String, unique: true},
     email: String,
     senha: String
 })
