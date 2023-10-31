@@ -38,4 +38,12 @@ router.post('/criar-time', async (req, res)=>{
    
 })
 
+// Editar Time
+
+// Excluir Time
+
+//Mostrar Times 
+
+//Mostrartime por nome
+
 module.exports = router

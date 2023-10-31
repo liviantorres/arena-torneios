@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 const DB_USER = 'livian';
 const DB_PASSWORD = encodeURIComponent('qb6VGWopKAjkIexc')
 
-
 mongoose
 .connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.wnhclvd.mongodb.net/arena-toneios?retryWrites=true&w=majority`)
 .then( () => {

@@ -42,4 +42,65 @@ router.post('/criar-jogador', async (req, res) => {
     }
   });
 
+// Editar Jogador
+router.patch('/:id', async (req, res)=>{
+
+  const id = req.params.id
+  const { nome, posicao, timeId } = req.body
+
+
+  try {
+      
+      const jogador = await Jogador.findOne({_id: id})
+      
+      if(!jogador){
+          res.status(422).json({ message: 'O jogador não foi encontrado' })
+          return
+      }
+
+      const timeOrigem = await Time.findOne({_id: jogador.timeId})
+      const timeDestino = await Time.findOne({_id: timeId})
+
+      if(!timeOrigem || !timeDestino){
+        res.status(422).json({message: 'Time de origem ou destino não encontrado'})
+        return
+      }
+
+      timeOrigem.jogadores.pull(jogador._id)
+      await timeOrigem.save()
+
+      jogador.nome = nome
+      jogador.posicao = posicao
+      jogador.timeId = timeId
+      await jogador.save()
+
+      timeDestino.jogadores.push(jogador._id)
+      await timeDestino.save()
+      
+      res.status(200).json(jogador)
+
+  } catch (error) {
+      res.status(500).json({ error: error })
+  }
+})
+
+
+// Excluir Jogador
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id 
+  const jogador = await Jogador.findOne({_id:id})
+
+  if(!jogador){
+    res.status(422).json({message: 'Jogador não encontrado'})
+  }
+  try {
+    await Jogador.deleteOne({_id: id})
+    res.status(200).json({message: 'Jogador removido com sucesso'})
+    
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
+
+})
+
 module.exports = router
