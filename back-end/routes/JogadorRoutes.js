@@ -59,23 +59,31 @@ router.patch('/:id', async (req, res)=>{
       }
 
       const timeOrigem = await Time.findOne({_id: jogador.timeId})
-      const timeDestino = await Time.findOne({_id: timeId})
+      let timeDestino = null
 
-      if(!timeOrigem || !timeDestino){
-        res.status(422).json({message: 'Time de origem ou destino não encontrado'})
-        return
+      if(timeId){
+        timeDestino = await Time.findOne({ _id: timeId })
+
+        timeOrigem.jogadores.pull(jogador._id)
+        await timeOrigem.save()
+
+        if(!timeDestino){
+          res.status(422).json({message: 'Time destino não encontrado'})
+          return
+        }
       }
-
-      timeOrigem.jogadores.pull(jogador._id)
-      await timeOrigem.save()
 
       jogador.nome = nome
       jogador.posicao = posicao
-      jogador.timeId = timeId
+
+      if (timeId) {
+        jogador.timeId = timeId;
+        timeDestino.jogadores.push(jogador);
+        await timeDestino.save();
+      }
+
       await jogador.save()
 
-      timeDestino.jogadores.push(jogador._id)
-      await timeDestino.save()
       
       res.status(200).json(jogador)
 
