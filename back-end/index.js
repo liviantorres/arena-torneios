@@ -17,15 +17,19 @@ app.use(express.json());
 const userRoutes = require('./routes/userRoutes')
 const jogadorRoutes = require('./routes/JogadorRoutes')
 const timeRoutes = require('./routes/TimeRoutes')
+const campeonatoRoutes = require('./routes/CampeonatoRoutes')
+const partidaRoutes = require('./routes/PartidaRoutes')
 
 app.use('/usuario', userRoutes)
 app.use('/jogador', jogadorRoutes)
 app.use('/time', timeRoutes)
+app.use('/campeonato', campeonatoRoutes)
+app.use('/partida' , partidaRoutes)
 
 // rota inicial / endpoint
 app.get('/', (req, res) => {
 
-    res.json({ message: 'Oi express'})
+    res.json({ message: 'Oi'})
 
 })
 
