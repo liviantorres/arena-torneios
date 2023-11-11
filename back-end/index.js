@@ -1,8 +1,21 @@
 // config inicial
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({extended:true}))
+
+app.use(session({secret:'teste'}));
+
+const path = require('path');
 
 const mongoose = require('mongoose');
+
+
+app.use(express.static(path.join(__dirname, '../Front-end/imagens')));
+
+app.set("view engine", "ejs");
+app.set("views", "../Front-end/views");
 
 //forma de ler JSON / middlewares
 app.use(
@@ -26,12 +39,34 @@ app.use('/time', timeRoutes)
 app.use('/campeonato', campeonatoRoutes)
 app.use('/partida' , partidaRoutes)
 
-// rota inicial / endpoint
-app.get('/', (req, res) => {
-
-    res.json({ message: 'Oi'})
-
+// rota inicial 
+app.get('/login', (req, res) => {
+    res.render('./tela-login')
 })
+/*
+const User = require('./models/User');
+
+app.post('/login', async (req, res)=>{
+
+    const email = req.body.login
+    const senha = req.body.senha
+
+    const user = await User.findOne({email});
+    if(!user){
+        return res.status(400).json({message: 'Usuário não existe no sistema'})
+    }
+    if(user.senha != senha){
+        return res.status(400).json({message: 'Senha Inválida'})
+    }
+
+    try {
+        res.redirect('/usuario')
+    } catch (error) {
+        res.status(500).json({ message: 'Erro no serviddor' });
+    }
+
+    res.render('./tela-registro')
+})*/
 
 // entregar uma porta
 const DB_USER = 'livian';

@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const userController = require('../controllers/userController')
 
+router.get('/register', async (req, res) =>{
+    res.render('./tela-registro')
+})
+
 router.post('/register', userController.registrarUsuario)
 
 router.post('/login', userController.loginUsuario)

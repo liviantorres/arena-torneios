@@ -1,6 +1,9 @@
 const User = require('../models/User');
 
+
 const registrarUsuario = async (req, res) => {
+    
+
     const {nome, email, senha} = req.body
 
     if(!nome){
