@@ -1,6 +1,7 @@
 
 const Campeonato = require('../models/Campeonato')
-const Partida = require('../models/Partida')
+const Partida = require('../models/Partida');
+const Time = require('../models/Time');
 
 const criarCampeonato = async (req, res) => {
     const { nome, descricao, quantidade_times, premiacao, forma_competicao } = req.body;
@@ -34,8 +35,18 @@ const excluirCampeonato = async (req, res) => {
             res.status(422).json({message: 'Campeonato não existe'})
             return
         }
+        const timesCampeonato = await Time.find({campeonatoId: id})
+        for( const time of timesCampeonato){
+          await Time.deleteOne({_id: time._id})
+        }
 
+        const partidasCampeonato = await Partida.findOne({campeonatoId: id})
+        for (const partida of partidasCampeonato){
+          await Partida.deleteOne({_id: partida._id})
+        }
 
+        await campeonato.deleteOne({_id: id})
+        res.status(200).json({message: 'Campeonato removido com sucesso'})
 
     } catch (error) {
         res.status(500).json({error: error})

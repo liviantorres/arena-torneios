@@ -5,10 +5,10 @@ const User = mongoose.model('User', {
     avatar: String,
     email: String,
     senha: String,
-    /*campeonatos: [{
+    campeonatos: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Campeonato'
-    }]*/
+    }]
 })
 
 module.exports = User

@@ -9,11 +9,13 @@ const Campeonato = mongoose.model('Campeonato', {
     times: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Time'
-    }]
-    /*partidas: [{
+    }],
+    partidas: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Partida'
-    }]*/
+    }],
+   // grupoDeTimes: {},
+    usuarioId: String
 })
 
 module.exports = Campeonato

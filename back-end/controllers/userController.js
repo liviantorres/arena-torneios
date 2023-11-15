@@ -64,7 +64,9 @@ const loginUsuario = async (req, res) => {
     }
 
     try {
-        return res.status(201).json({message: 'Usuário entrou!'})
+        req.session.login = email
+        res.render('teste', {login: email})
+        //return res.status(201).json({message: 'Usuário entrou!'})
     } catch (error) {
         res.status(500).json({ message: 'Erro no serviddor' });
     }
@@ -123,7 +125,7 @@ const atualizarUsuarios = async (req, res)=>{
     }
 }
 
-deletarUsuario = async (req, res)=>{
+const deletarUsuario = async (req, res)=>{
     const id = req.params.id
 
     const usuario = await User.findOne({_id: id})
