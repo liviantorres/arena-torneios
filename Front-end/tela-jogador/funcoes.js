@@ -1,4 +1,4 @@
-document.getElementById('criarcampeonato').addEventListener('click', function() {
+ document.getElementById('criarcampeonato').addEventListener('click', function() {
     document.getElementById('overlay').style.display = 'flex';
   });
 
