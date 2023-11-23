@@ -69,7 +69,7 @@
 
         <div class="container text-light col-lg-3" style="margin-top: 40px; width: 420px; height: 520px; background-color:
        #161642; padding: 70px; ">
-            <form method="post" action="/usuario/login">
+            <form method="post" action="/">
                 <legend style="margin-top: -25px; font-size: 38px;"><b>Entrar</b></legend>
                 <hr style="opacity: 100%;"><br>
                 <div class="mb-3">
@@ -80,7 +80,9 @@
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Senha:</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="senha">
-                </div><br>
+                </div>
+                <%= error %>
+                    <br>
                 <div class="d-grid gap-2 col-12 mx-auto">
                     <button class="btn btn-warning" style="color: #4d3601; --bs-btn-hover-bg: #A57300;" type="submit"
                         name="acao">

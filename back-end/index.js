@@ -61,12 +61,12 @@ app.use('/campeonato', campeonatoRoutes)
 app.use('/partida' , partidaRoutes)
 
 // rota inicial 
-app.post('/', (req, res) =>{
+app.get('/', (req, res) =>{
     if(req.session.login){
         res.render('teste')
     }
     else{
-        res.render('./tela-login')
+        res.render('./tela-login', {error: ''})
     }
 })
 
@@ -75,21 +75,24 @@ app.post('/', async (req, res) => {
     const {email, senha} = req.body
 
     if(!email){
-        res.status(422).json({error: 'O nome é obrigatório!'})
-        
+
+       // res.status(422).json({error: 'O email é obrigatório!'})
+        res.render('./tela-login', {error: "O email é obrigatório"})
         return
     }else if(!senha){
-        res.status(422).json({error: 'O email é obrigatório!'})
+        res.render('./tela-login', {error: 'A senha é obrigatório!'})
         return
     }
 
     // Checar se o usuario existe
     const user = await User.findOne({email});
     if(!user){
-        return res.status(400).json({message: 'Usuário não existe no sistema'})
+        //return res.status(400).json({message: 'Usuário não existe no sistema'})
+        res.render('./tela-login', {error: 'Usuário não existe no sistema'})
     }
     if(user.senha != senha){
-        return res.status(400).json({message: 'Senha Inválida'})
+        //return res.status(400).json({message: 'Senha Inválida'})
+        res.render('./tela-login', {error: 'Senha Inválida'})
     }
 
     try {
