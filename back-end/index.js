@@ -29,13 +29,11 @@ app.use(
 );
 // Middleware para verificar autenticação
 const verificaAutenticacao = (req, res, next) => {
-    // Verifique se o usuário está autenticado
     if (req.session.user) {
-      // Se estiver autenticado, continue com a solicitação
       next();
     } else {
       // Se não estiver autenticado, redirecione para a página de login
-      res.redirect('/login');
+      res.redirect('/');
     }
   };
   
@@ -54,11 +52,11 @@ const timeRoutes = require('./routes/TimeRoutes')
 const campeonatoRoutes = require('./routes/CampeonatoRoutes')
 const partidaRoutes = require('./routes/PartidaRoutes')
 
-app.use('/usuario', userRoutes)
-app.use('/jogador', jogadorRoutes)
-app.use('/time', timeRoutes)
-app.use('/campeonato', campeonatoRoutes)
-app.use('/partida' , partidaRoutes)
+app.use('/usuario', verificaAutenticacao, userRoutes)
+app.use('/jogador', verificaAutenticacao, jogadorRoutes)
+app.use('/time', verificaAutenticacao, timeRoutes)
+app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
+app.use('/partida', verificaAutenticacao, partidaRoutes)
 
 // rota inicial 
 app.get('/', (req, res) =>{
@@ -89,16 +87,18 @@ app.post('/', async (req, res) => {
     if(!user){
         //return res.status(400).json({message: 'Usuário não existe no sistema'})
         res.render('./tela-login', {error: 'Usuário não existe no sistema'})
+        return
     }
     if(user.senha != senha){
         //return res.status(400).json({message: 'Senha Inválida'})
         res.render('./tela-login', {error: 'Senha Inválida'})
+        return
     }
 
     try {
         req.session.user = email
         req.session.save()
-        res.redirect('/testa')
+        res.redirect('./campeonato')
         //res.render('teste', {login: email})
         //return res.status(201).json({message: 'Usuário entrou!'})
     } catch (error) {
@@ -107,8 +107,45 @@ app.post('/', async (req, res) => {
 
 })
 
-app.get('/testa', verificaAutenticacao, async (req, res)=>{
-     res.render('teste', {login: req.session.user})
+app.get('/register', async (req, res) => {
+    
+    const {nome, email, senha} = req.body
+
+    if(!nome){
+        res.status(422).json({error: 'O nome é obrigatório!'})
+        return
+    }else if(!email){
+        res.status(422).json({error: 'O email é obrigatório!'})
+        return
+    }else if(!senha){
+        res.status(422).json({error: 'A senha é obrigatória!'})
+        return
+    }
+
+
+    // Verifica se o email já existe no sistema
+    try {
+            const user = await User.findOne({email});
+            if(user){
+                return res.json({message: 'Email já cadastrado'})
+            }
+    } catch (error) {
+        res.status(500).json({ message: 'Erro no servidor' });
+    }
+
+    const user = {
+        nome, email, senha
+    }
+
+    try {
+        //criando dados 
+        await User.create(user)
+
+        res.status(201).json({message: "Pessoa Inserida com sucesso"})
+
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
 })
 
 // entregar uma porta
