@@ -107,18 +107,22 @@ app.post('/', async (req, res) => {
 
 })
 
-app.get('/register', async (req, res) => {
+app.get('/register', (req, res)=>{
+    res.render('./tela-registro', {error: ''})
+})
+
+app.post('/register', async (req, res) => {
     
     const {nome, email, senha} = req.body
 
     if(!nome){
-        res.status(422).json({error: 'O nome é obrigatório!'})
+        res.render('./tela-registro', {error: "O nome é obrigatório"})
         return
     }else if(!email){
-        res.status(422).json({error: 'O email é obrigatório!'})
+        res.render('./tela-registro', {error: 'O email é obrigatório!'})
         return
     }else if(!senha){
-        res.status(422).json({error: 'A senha é obrigatória!'})
+        res.render('./tela-registro', {error: 'A senha é obrigatória!'})
         return
     }
 
@@ -127,7 +131,7 @@ app.get('/register', async (req, res) => {
     try {
             const user = await User.findOne({email});
             if(user){
-                return res.json({message: 'Email já cadastrado'})
+                return res.render('./tela-registro', {error: 'Email já cadastrado'})
             }
     } catch (error) {
         res.status(500).json({ message: 'Erro no servidor' });
@@ -141,11 +145,18 @@ app.get('/register', async (req, res) => {
         //criando dados 
         await User.create(user)
 
-        res.status(201).json({message: "Pessoa Inserida com sucesso"})
-
+        res.redirect('/')
     } catch (error) {
         res.status(500).json({error: error})
     }
+})
+
+app.get('/sobre-nos', (req, res)=>{
+    res.render('./telasobre')
+})
+
+app.get('/contato', (req, res)=>{
+    res.render('./telacontato')
 })
 
 // entregar uma porta

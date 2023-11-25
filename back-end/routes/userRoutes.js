@@ -7,7 +7,7 @@ const userController = require('../controllers/userController')
     res.send('Esta é uma rota protegida!');
   });
 */
-router.post('/register', userController.registrarUsuario)
+//router.post('/register', userController.registrarUsuario)
 
 //router.post('/login', userController.loginUsuario)
  

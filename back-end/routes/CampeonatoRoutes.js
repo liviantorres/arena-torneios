@@ -23,6 +23,7 @@ router.get('/teste', (req, res)=>{
     res.render('./teste', {login: req.session.user})
 })
 
+
 router.post('/criar-campeonato', campeonatoController.criarCampeonato)
 
 router.get('/editar-campeonato', async (req, res) => {
@@ -45,7 +46,6 @@ router.get('/editar-campeonato', async (req, res) => {
 
 router.post('/editar-campeonato', campeonatoController.editarCampeonato)
 
-
 router.delete('/:id', campeonatoController.excluirCampeonato)
 
 router.patch('/:id', campeonatoController.editarCampeonato)
@@ -53,6 +53,18 @@ router.patch('/:id', campeonatoController.editarCampeonato)
 router.get('/', campeonatoController.mostrarCampeonatos)
 
 router.get('/:nome', campeonatoController.mostrarCampeonatosPorNome)
+
+
+router.get('/exibirCampeonato/:id', async (req, res)=>{
+    try {
+        const idCampeonato = req.params.id
+        const campeonato = await Campeonato.findOne({_id: idCampeonato});
+        res.render('./tela_campeonato/campeonatos', {campeonato: campeonato})
+    } catch (error) {
+        res.status(500).json({message: "Erro no servidor"})
+    }
+    
+})
 
 module.exports = router
 

@@ -28,7 +28,7 @@ const criarCampeonato = async (req, res) => {
         usuarioId : usuario._id
       };
       await Campeonato.create(campeonato);
-      res.status(201).json({ message: 'Campeonato criado' });
+      res.redirect('/campeonato');
     } catch (error) {
       res.status(500).json({ error: error });
     }  
