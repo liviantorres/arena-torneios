@@ -45,6 +45,10 @@ const verificaAutenticacao = (req, res, next) => {
 
 app.use(express.json());
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+
 // rotas api
 const userRoutes = require('./routes/userRoutes')
 const jogadorRoutes = require('./routes/JogadorRoutes')
@@ -55,7 +59,8 @@ const partidaRoutes = require('./routes/PartidaRoutes')
 app.use('/usuario', verificaAutenticacao, userRoutes)
 app.use('/jogador', verificaAutenticacao, jogadorRoutes)
 app.use('/time', verificaAutenticacao, timeRoutes)
-app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
+//app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
+app.use('/campeonato', campeonatoRoutes)
 app.use('/partida', verificaAutenticacao, partidaRoutes)
 
 // rota inicial 
@@ -70,40 +75,46 @@ app.get('/', (req, res) =>{
 
 const User = require('./models/User');
 app.post('/', async (req, res) => {
-    const {email, senha} = req.body
 
-    if(!email){
-
-       // res.status(422).json({error: 'O email é obrigatório!'})
-        res.render('./tela-login', {error: "O email é obrigatório"})
-        return
-    }else if(!senha){
-        res.render('./tela-login', {error: 'A senha é obrigatório!'})
-        return
-    }
-
-    // Checar se o usuario existe
-    const user = await User.findOne({email});
-    if(!user){
-        //return res.status(400).json({message: 'Usuário não existe no sistema'})
-        res.render('./tela-login', {error: 'Usuário não existe no sistema'})
-        return
-    }
-    if(user.senha != senha){
-        //return res.status(400).json({message: 'Senha Inválida'})
-        res.render('./tela-login', {error: 'Senha Inválida'})
-        return
-    }
-
-    try {
-        req.session.user = email
-        req.session.save()
+    if(req.session.user){
         res.redirect('./campeonato')
-        //res.render('teste', {login: email})
-        //return res.status(201).json({message: 'Usuário entrou!'})
-    } catch (error) {
-        res.status(500).json({ message: 'Erro no serviddor' });
-    }
+        return
+    }else{
+        const {email, senha} = req.body
+
+        if(!email){
+
+        // res.status(422).json({error: 'O email é obrigatório!'})
+            res.render('./tela-login', {error: "O email é obrigatório"})
+            return
+        }else if(!senha){
+            res.render('./tela-login', {error: 'A senha é obrigatório!'})
+            return
+        }
+
+        // Checar se o usuario existe
+        const user = await User.findOne({email});
+        if(!user){
+            //return res.status(400).json({message: 'Usuário não existe no sistema'})
+            res.render('./tela-login', {error: 'Usuário não existe no sistema'})
+            return
+        }
+        if(user.senha != senha){
+            //return res.status(400).json({message: 'Senha Inválida'})
+            res.render('./tela-login', {error: 'Senha Inválida'})
+            return
+        }
+
+        try {
+            req.session.user = email
+            req.session.save()
+            res.redirect('./campeonato')
+            //res.render('teste', {login: email})
+            //return res.status(201).json({message: 'Usuário entrou!'})
+        } catch (error) {
+            res.status(500).json({ message: 'Erro no serviddor' });
+        }
+}
 
 })
 

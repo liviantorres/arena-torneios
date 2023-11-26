@@ -155,9 +155,9 @@
         <img src="/logo.png" alt="Logo" width="68" height="71" class="d-inline-block align-text-top">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -185,15 +185,15 @@
     </div>
   </nav>
   <div class="container-xl text-light"
-    style="margin-top: 40px; height: 670px; background-color: #161642; margin-bottom: 50px; padding: 40px; position: relative;">
-    <a href="/campeonato">
-
-      <img id="fecharJanela" src="/x.png" alt="Fechar"
-        style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
-    </a>
-    <div class="perfil d-flex align-items-center">
+  style="margin-top: 40px; height: 670px; background-color: #161642; margin-bottom: 50px; padding: 40px; position: relative;">
+<a href="/campeonato">
+  <img id="fecharJanela" src="/x.png" alt="Fechar"
+    style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+  </a>
+  <div class="perfil d-flex align-items-center">
       <img src="/trofeubranco.png" alt="troféu">
-      <h1 class="mb-0 ms-3">#Copa UFC 2023</h1>
+      <h1 class="mb-0 ms-3">#<%=campeonato.nome%>
+      </h1>
     </div>
     <hr style="opacity: 100%; margin-top: 4px;">
     <div class="row">
@@ -224,6 +224,7 @@
             <button class="btn btn-dark" type="button" id="timesad" style="color: #464646;">
               <b>PARTIDAS</b></button>
           </div>
+        </form>
       </div>
       <div class="col"><br>
         <div class="perfil d-flex" style="font-size: 24px;"><b>Equipes</b></div>
@@ -240,7 +241,7 @@
             <input placeholder="Search" type="search" class="input">
           </div>
           <div class="d-grid gap-2 col-12 mx-auto">
-            <button class="btn btn-warning" type="button" id="timesabrir"
+            <button class="btn btn-warning" type="button" id="timesadicionar"
               style="color: #4d3601; --bs-btn-hover-bg: #A57300; margin-top: 10px;">
               <b>ADICIONAR EQUIPE</b></button>
           </div>
@@ -282,9 +283,12 @@
               </div>
             </div>
             <div class="d-grid gap-2 col-12 mx-auto">
-              <button class="btn btn-warning" type="button" id="timesad"
-                style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
-                <b>ADICIONAR</b></button>
+              <button class="btn btn-warning" type="button" id="timesadicionar"
+                style="color: #4d3601; --bs-btn-hover-bg: #A57300; margin-top: 10px;">
+                <b>ADICIONAR EQUIPE</b>
+              </button>
+              </div>
+              <div class="mensagem"> ainda não há equipes</div>
             </div>
           </div>
       </form>
@@ -393,19 +397,15 @@
   </div>
 
   <script>
-    document.getElementById('criarcampeonato').addEventListener('click', function () {
-      document.getElementById('overlay').style.display = 'flex';
+              document.getElementById('timesadicionar').addEventListener('click', function () {
+                if (document.getElementById('overlay3').style.display === 'flex') {
+                  document.getElementById('overlay3').style.display = 'none';
+                } else {
+                  document.getElementById('overlay3').style.display = 'flex';
+              }
     });
 
-    document.getElementById('janelafechar').addEventListener('click', function () {
-      document.getElementById('overlay').style.display = 'none';
-    });
-
-    document.getElementById('timesad').addEventListener('click', function () {
-      document.getElementById('overlay3').style.display = 'flex';
-    });
-
-    document.getElementById('janelafechar3').addEventListener('click', function () {
+              document.getElementById('janelatimeclose').addEventListener('click', function () {
       document.getElementById('overlay3').style.display = 'none';
     });
   </script>
