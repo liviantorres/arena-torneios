@@ -5,21 +5,23 @@ const Campeonato = require('../models/Campeonato')
 
 const criarTime = async (req, res)=>{
 
-    const {nome, brasao, abreviacao, campeonatoId} = req.body
+    const campeonatoId = req.params.id
+
+    const {nome, abreviacao} = req.body
 
     if(!nome){
         res.status(422).json({error: 'O nome é obrigatório!'})
         return
-    }else if(!brasao){
-        res.status(422).json({error: 'O brasao é obrigatório!'})
-        return
+    //}else if(!brasao){
+     //   res.status(422).json({error: 'O brasao é obrigatório!'})
+       // return
     }else if(!abreviacao){
         res.status(422).json({error: 'A abreviacao do time é obrigatória!'})
         return
-    }else if(!campeonatoId){
-        res.status(422).json({error: 'O campeonato do time é obrigatória!'})
-        return
-    }
+    }//else if(!campeonatoId){
+       // res.status(422).json({error: 'O campeonato do time é obrigatória!'})
+      // return
+    //}
 
     try{
 
@@ -31,7 +33,7 @@ const criarTime = async (req, res)=>{
 
         const time = new Time({
             nome,
-            brasao,
+            //brasao,
             abreviacao,
             campeonatoId
         })
@@ -40,7 +42,7 @@ const criarTime = async (req, res)=>{
         await time.save()
         campeonato.times.push(time)
         await campeonato.save()
-        res.status(201).json({message: "Time criado"})
+        res.redirect(`/campeonato/exibirCampeonato/${campeonatoId}`)
 
     }catch(erro){
         res.status(500).json({error: 'Erro no servidor'})

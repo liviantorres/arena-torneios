@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const timeController = require('../controllers/TimeController')
 
-router.post('/', timeController.criarTime)
+router.post('/:id', timeController.criarTime)
 
 router.patch('/:id', timeController.editarTime)
 

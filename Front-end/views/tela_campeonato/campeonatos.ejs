@@ -245,7 +245,19 @@
               style="color: #4d3601; --bs-btn-hover-bg: #A57300; margin-top: 10px;">
               <b>ADICIONAR EQUIPE</b></button>
           </div>
-          <div class="mensagem"> ainda não há equipes</div>
+          <div>
+            <% if (campeonato.times.length> 0) { %>
+              <% campeonato.times.forEach(time=> { %>
+                <p>
+                  <%= time.nome %>
+                    <%= time.abreviacao %>
+                </p>
+          
+                <% }); %>
+                  <% } else { %>
+                    <div class="mensagem">Ainda não há equipes</div>
+                    <% } %>
+          </div>
         </div>
       </div>
     </div>
@@ -257,7 +269,7 @@
      #161642; padding: 45px; ">
       <img id="janelatimeclose" src="/x.png" alt="Fechar"
         style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
-      <form>
+      <form method="post" action="/time/<%=campeonato._id%>">
         <div class="perfil d-flex align-items-center ">
           <img src="/icon camiseta.png" alt="camiseta">
           <h1 class="mb-0 ms-3">#1 Novo Time</h1>
@@ -275,20 +287,19 @@
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">Nome:</label>
-                <input type="email" class="form-control" id="" aria-describedby="emailHelp">
+                <input name="nome" type="text" class="form-control" id="nome" aria-describedby="emailHelp">
               </div>
               <div class="mb-3">
                 <label class="form-label">Abreviação (3 letras Maiúsculas):</label>
-                <input type="email" class="form-control" id="" aria-describedby="emailHelp">
+                <input name="abreviacao" type="text" class="form-control" id="abreviacao" aria-describedby="emailHelp">
               </div>
             </div>
             <div class="d-grid gap-2 col-12 mx-auto">
-              <button class="btn btn-warning" type="button" id="timesadicionar"
+              <button class="btn btn-warning" type="submit" id="timesadicionar"
                 style="color: #4d3601; --bs-btn-hover-bg: #A57300; margin-top: 10px;">
                 <b>ADICIONAR EQUIPE</b>
               </button>
               </div>
-              <div class="mensagem"> ainda não há equipes</div>
             </div>
           </div>
       </form>

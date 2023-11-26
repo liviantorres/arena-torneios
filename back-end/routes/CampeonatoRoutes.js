@@ -147,7 +147,11 @@ router.get('/:nome', campeonatoController.mostrarCampeonatosPorNome)
 router.get('/exibirCampeonato/:id', async (req, res)=>{
     try {
         const idCampeonato = req.params.id
-        const campeonato = await Campeonato.findOne({_id: idCampeonato});
+
+        const campeonato = await Campeonato.findById(req.params.id).populate('times');
+        
+
+        //const campeonato = await Campeonato.findOne({_id: idCampeonato});
         res.render('./tela_campeonato/campeonatos', {campeonato: campeonato})
     } catch (error) {
         res.status(500).json({message: "Erro no servidor"})
