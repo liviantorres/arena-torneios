@@ -241,14 +241,19 @@
             <input placeholder="Search" type="search" class="input">
           </div>
           <div class="d-grid gap-2 col-12 mx-auto">
-            <button class="btn btn-warning" type="button" id="timesadicionar"
-              style="color: #4d3601; --bs-btn-hover-bg: #A57300; margin-top: 10px;">
-              <b>ADICIONAR EQUIPE</b></button>
-          </div>
+            <% if (campeonato.times.length < campeonato.quantidade_times) { %>
+              <button class="btn btn-warning" type="button" id="timesadicionar"
+                style="color: #4d3601; --bs-btn-hover-bg: #A57300; margin-top: 10px;">
+                <b>ADICIONAR EQUIPE</b>
+                </button>
+                <% } else { %>
+                  <div class="mensagem">Limite máximo de times atingido</div>
+                  <% } %>
           <div>
             <% if (campeonato.times.length> 0) { %>
-              <% campeonato.times.forEach(time=> { %>
+              <% campeonato.times.forEach((time,i)=> { %>
                 <p>
+                  <%= i+1 %>
                   <%= time.nome %>
                     <%= time.abreviacao %>
                 </p>
