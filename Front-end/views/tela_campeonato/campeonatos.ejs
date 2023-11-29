@@ -337,57 +337,57 @@
     }
   });
 
-          document.getElementById('janelatimeclose').addEventListener('click', function () {
+        document.getElementById('janelatimeclose').addEventListener('click', function () {
       document.getElementById('overlay3').style.display = 'none';
-        });
+      });
 
-                    document.getElementById('logoContainer').addEventListener('click', function () {
-                      if (document.getElementById('overlay').style.display === 'block') {
-                        document.getElementById('overlay').style.display = 'none';
-                      } else {
-                        document.getElementById('overlay').style.display = 'block';
-                      }
+                  document.getElementById('logoContainer').addEventListener('click', function () {
+                    if (document.getElementById('overlay').style.display === 'block') {
+                      document.getElementById('overlay').style.display = 'none';
+                    } else {
+                      document.getElementById('overlay').style.display = 'block';
+                    }
   });
 
   document.getElementById('fecharurl').addEventListener('click', function () {
     document.getElementById('overlay').style.display = 'none';
   });
 
-                    document.getElementById('salvarUrl').addEventListener('click', function () {
-                    var brasao = document.getElementById('brasao').value;
-                    document.getElementById('logoContainer').innerHTML = '<img src="' + brasao + '" width="130px" height="125px">';
-                    document.getElementById('overlay').style.display = 'none';
+                  document.getElementById('salvarUrl').addEventListener('click', function () {
+                  var brasao = document.getElementById('brasao').value;
+                  document.getElementById('logoContainer').innerHTML = '<img src="' + brasao + '" width="130px" height="125px">';
+                  document.getElementById('overlay').style.display = 'none';
+                });
+
+                  document.getElementById('logo').addEventListener('click', function () {
+                    document.getElementById('overlay').style.display = 'block';
                   });
 
-                    document.getElementById('logo').addEventListener('click', function () {
-                      document.getElementById('overlay').style.display = 'block';
-                    });
 
+                </script>
+              
+              <script>
+                document.getElementById('timesadicionar2').addEventListener('click', function () {
+                  var brasao = document.getElementById('brasao').value;
+                  var nome = document.getElementById('nome').value;
+                  var abreviacao = document.getElementById('abreviacao').value;
 
-                  </script>
-                
-                <script>
-                  document.getElementById('timesadicionar2').addEventListener('click', function () {
-                    var brasao = document.getElementById('brasao').value;
-                    var nome = document.getElementById('nome').value;
-                    var abreviacao = document.getElementById('abreviacao').value;
+                  document.getElementById('logoContainer').innerHTML = '<img src="' + brasao + '" width="130px" height="125px">';
+                  document.getElementById('overlay').style.display = 'none';
 
-                    document.getElementById('logoContainer').innerHTML = '<img src="' + brasao + '" width="130px" height="125px">';
-                    document.getElementById('overlay').style.display = 'none';
-
-                    // Fazer requisição AJAX para enviar os dados para o backend
-                    $.ajax({
-                      url: '/time/<%=campeonato._id%>',  // Substitua isso pela sua rota no backend
-                      type: 'POST',
-                      data: { nome: nome, abreviacao: abreviacao, brasao: brasao },
-                      success: function (response) {
-                        // Lógica para lidar com a resposta do backend, se necessário
-                        console.log('Dados enviados com sucesso!');
-                      },
-                      error: function (error) {
-                        console.error('Erro ao enviar dados para o backend:', error);
-                      }
-                    });
+                  // Fazer requisição AJAX para enviar os dados para o backend
+                  $.ajax({
+                    url: '/time/<%=campeonato._id%>',  // Substitua isso pela sua rota no backend
+                    type: 'POST',
+                    data: { nome: nome, abreviacao: abreviacao, brasao: brasao },
+                    success: function (response) {
+                      // Lógica para lidar com a resposta do backend, se necessário
+                      console.log('Dados enviados com sucesso!');
+                    },
+                    error: function (error) {
+                      console.error('Erro ao enviar dados para o backend:', error);
+                    }
+                  });
   });
 
 </script>
