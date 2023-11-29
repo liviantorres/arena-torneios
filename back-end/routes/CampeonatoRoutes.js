@@ -74,7 +74,7 @@ router.post('/editar-campeonato/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-  })
+})
 
 
 //router.delete('/:id', campeonatoController.excluirCampeonato)
@@ -136,8 +136,6 @@ router.delete('/:id', async (req, res) => {
 
 
 router.patch('/:id', campeonatoController.editarCampeonato)
-
-
 
 router.get('/', campeonatoController.mostrarCampeonatos)
 

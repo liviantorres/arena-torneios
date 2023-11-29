@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arena Torneios</title>
+    <link rel="shortcut icon" href="/logo.png">
+    <link rel="stylesheet" type="text/css" href="./estilização.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <!--  EXIBIR TIME-->
+
+    <style>
+        #overlay2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        #overlay-content {
+            background-color: #161642;
+            padding: 70px;
+        }
+    </style>
+
+    <div id="overlay2">
+        <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px;  width: 700px; height: 420px; background-color:
+     #161642; padding: 30px; ">
+            <a href="/campeonato"><img id="janelatimeclose" src="/x.png" alt="Fechar"
+                    style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;"></a>
+            <form method="post" action="/time/editar-time/<%=time._id%>">
+                <div class="perfil d-flex align-items-center ">
+                    <img src="/icon camiseta.png" alt="camiseta">
+                    <h1 class="mb-0 ms-3">
+                        <%=time.nome%>
+                    </h1>
+                </div><br>
+                <hr style="opacity: 100%; margin-top: 0px;">
+                <div class="container">
+                    <div class="row ">
+                        <div class="col-sm-4">
+                            <label class="form-label" style="font-size: 22px;"> <B>Brasão</B></label>
+                            <hr style="opacity: 100%; margin-top: 0px;">
+                            <div class="fundoimagem">
+                                <center>
+                                    <div class="imagem">
+
+                                        <img src="/logo.png" width="130px" height="125px">
+
+                                    </div>
+                                </center>
+                            </div>
+
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                                <a href="/jogador/<%=time._id%>">
+                                    <button class="btn btn-warning" type="button" id="timesad"
+                                        style="margin-top: 18px; background-color: #ccf03b; color: black; --bs-btn-hover-bg: #A57300;">
+                                        <b>Jogadores</b></button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label" style="font-size: 22px;"><b>Nome</b></label>
+                                <hr style="opacity: 100%; margin-top: 0px;">
+                                <div class="info">
+                                    <input value="<%=time.nome%>" type="text" name="nome">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" style="font-size: 22px;"><b>Abreviação</b> </label>
+                                <hr style="opacity: 100%; margin-top: 0px;">
+                                <div class="info">
+                                    <input value="<%=time.abreviacao%>" type="text" name="abreviacao">
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                                <button class="btn btn-warning" type="submit" id="timesad"
+                                    style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+                                    <b>EDITAR TIME</b></button>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

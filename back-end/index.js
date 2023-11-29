@@ -59,8 +59,8 @@ const partidaRoutes = require('./routes/PartidaRoutes')
 app.use('/usuario', verificaAutenticacao, userRoutes)
 app.use('/jogador', verificaAutenticacao, jogadorRoutes)
 app.use('/time', verificaAutenticacao, timeRoutes)
-//app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
-app.use('/campeonato', campeonatoRoutes)
+app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
+//app.use('/campeonato', campeonatoRoutes)
 app.use('/partida', verificaAutenticacao, partidaRoutes)
 
 // rota inicial 
