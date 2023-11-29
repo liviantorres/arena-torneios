@@ -7,21 +7,21 @@ const criarTime = async (req, res)=>{
 
     const campeonatoId = req.params.id
 
-    const {nome, abreviacao} = req.body
+    const {nome, abreviacao, brasao} = req.body
 
     if(!nome){
         res.status(422).json({error: 'O nome é obrigatório!'})
         return
-    //}else if(!brasao){
-     //   res.status(422).json({error: 'O brasao é obrigatório!'})
-       // return
+    }else if(!brasao){
+        res.status(422).json({error: 'O brasao é obrigatório!'})
+        return
     }else if(!abreviacao){
         res.status(422).json({error: 'A abreviacao do time é obrigatória!'})
         return
-    }//else if(!campeonatoId){
-       // res.status(422).json({error: 'O campeonato do time é obrigatória!'})
-      // return
-    //}
+    }else if(!campeonatoId){
+        res.status(422).json({error: 'O campeonato do time é obrigatória!'})
+       return
+    }
 
     try{
 
@@ -33,7 +33,7 @@ const criarTime = async (req, res)=>{
 
         const time = new Time({
             nome,
-            //brasao,
+            brasao,
             abreviacao,
             campeonatoId
         })
