@@ -130,8 +130,10 @@
             </div>
           </div>
           <div class="col-md-1">
-            <a href="/">
-              <img src="/avatar.png" width="80px" height="80px" alt="Sua Imagem"></a>
+            
+                <img id="openFormButton" src="/avatar.png" width="80px" height="80px" alt="Sua Imagem">
+        
+              
           </div>
         </div>
       </div>
@@ -203,8 +205,6 @@
               <% } else { %>
                 <p style="color: white; font-size: 24px; margin-top: 250px;">Ainda não há Campeonatos</p>
                 <% } %>
-
-
       </div>
 
 
@@ -278,13 +278,13 @@
                 <a href="/campeonato/<%campeonato._id%>"><button class="btn btn-warning" type="submit" id="timesad"
                     style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
                     <b>ADICIONAR</b></button></a>
-                    </div>
-                    </div>
-                    </div>
-                    </form>
-                    </div>
-                    </div>
-                    </div>
+              </div>
+              </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
                 <!--  Excluir Campeonato -->
                 <div id="overlay200">
                   <div class="container text-light col-lg-3 position-relative"
@@ -304,10 +304,131 @@
 </body>
 </div>
 
+<!--TELAS SÓ DE USUÁRIO-->
+
+<!--   MOSTRAR OPÇÕES DE USUÁRIO   -->
+
+<div id="overlayUsuario" style="display: none">
+  <div class="container text-light col-lg-3 position-relative" style="margin-top: 40px; width: 420px; height: 480px; background-color:
+     #161642; padding: 70px; ">
+     <img id="fecharJanela" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+    <form>
+      <div class="perfil text-center">
+          <img src="/avatar.png" alt="Foto de Perfil">
+        </div><br>
+      <legend class="text-center" style="margin-top: -25px; font-size: 30px;"><b>#User3456</b></legend>
+      <hr style="opacity: 100%;">
+      <legend class="text-center" style="font-size: 13px;">#User3456@gmail.com</legend><br>
+      <hr style="opacity: 100%;"><br>
+      <div class="d-grid gap-2 col-12 mx-auto">
+        <button class="btn btn-warning" type="button" id="usuario" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+          <b>EDITAR</b></button>
+      </div><br>
+      <div class="d-grid gap-2 col-12 mx-auto">
+          <button class="btn btn-light sair" type="button" style="color: #2b2b2b; --bs-btn-hover-bg: #828282;">
+          <b>SAIR</b></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--EDITAR USUÁRIO-->
+<div id="overlayEditarUsuario" style="display: none;">
+  <div class="container text-light col-lg-3 position-relative" style="margin-top: 40px; width: 420px; height: 600px; background-color:
+     #161642; padding: 40px; ">
+     <img id="fechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+    <form id="formEditarPerfil" action="/usuario/editar-usuario" method="PUT">
+      <div class="perfil text-center">
+          <img src="/avatar.png" alt="Foto de Perfil">
+        </div><br>
+      <legend class="text-center" style="margin-top: -25px; font-size: 30px;"><b>#User3456</b></legend>
+      <hr style="opacity: 100%;">
+      <div class="mb-3">
+          <label class="form-label">Nome:</label>
+          <input name="nome" type="text" class="form-control" id="nome" aria-describedby="emailHelp">
+        </div>
+      <div class="mb-3">
+          <label  class="form-label">Email:</label>
+          <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label  class="form-label">Senha:</label>
+          <input name="senha" type="password" class="form-control" id="senha">
+        </div>
+        <div class="d-grid gap-2 col-12 mx-auto">
+          <button class="btn btn-warning" type="submit" id="salvarUsuario" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+            <b>SALVAR</b></button>
+        </div>
+        <br>
+
+        <p class="text-center" id="excluir"  style="color: #ccf03b; cursor: pointer;"> <b>Excluir conta</b></p>
+      </form>
+  </div>
+</div>
+
 <script>
+
+function editarPerfil() {
+    // Obtenha os valores dos campos do formulário
+    var nome = document.getElementById('nome').value;
+    var email = document.getElementById('email').value;
+    var senha = document.getElementById('senha').value;
+
+    // Faça algo com os valores, como enviá-los para o servidor via AJAX ou realizar outras operações necessárias.
+
+    // Exemplo de envio via AJAX (você pode ajustar conforme necessário):
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/usuario/editar-usuario', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    var data = {
+        nome: nome,
+        email: email,
+        senha: senha
+    };
+
+    xhr.send(JSON.stringify(data));
+
+    // Adicione lógica adicional conforme necessário
+}
+
+
+   document.getElementById('formEditarPerfil').addEventListener('submit', function (event) {
+    event.preventDefault();
+    editarPerfil();
+})
+
+document.getElementById('salvarUsuario').addEventListener('click', function() {
+    document.getElementById('formEditarPerfil').submit();
+});
+
   function goBack() {
     window.history.back();
   }
+  document.getElementById('fecharJanela').addEventListener('click', function() {
+    document.getElementById('overlayUsuario').style.display = 'none';
+  });
+
+  document.getElementById('usuario').addEventListener('click', function() {
+    document.getElementById('overlayEditarUsuario').style.display = 'flex';
+    document.getElementById('overlayUsuario').style.display = 'none';
+  });
+
+  document.querySelector('.sair').addEventListener('click', function() {
+    document.getElementById('overlayUsuario').style.display = 'none';
+  });
+
+  document.getElementById('excluir').addEventListener('click', function() {
+    document.getElementById('overlay3').style.display = 'flex';
+  });
+  document.getElementById('fechar').addEventListener('click', function() {
+    document.getElementById('overlayUsuario').style.display = 'none';
+    document.getElementById('overlayEditarUsuario').style.display = 'none';
+  });
+
+  document.getElementById('openFormButton').addEventListener('click', function() {
+    document.getElementById('overlayUsuario').style.display = 'flex';
+  });
 
   function showOverlay() {
     document.getElementById('overlay').style.display = 'flex';

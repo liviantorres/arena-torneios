@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Time = require('../models/Time')
 
-const timeController = require('../controllers/TimeController')
+const timeController = require('../controllers/TimeController');
+const Campeonato = require('../models/Campeonato');
 
 router.post('/:id', timeController.criarTime)
 
@@ -16,10 +17,10 @@ router.get('/', timeController.mostrarTime)
 router.post('/editar-time/:id', async (req, res) => {
     const timeId = req.params.id;
     
-    const { nome, abreviacao} = req.body;
+    const { nome, abreviacao, brasao} = req.body;
   
     try {
-        // Verifique se o campeonato existe
+        
         const time = await Time.findById(timeId);
   
         if (!time) {
@@ -28,9 +29,8 @@ router.post('/editar-time/:id', async (req, res) => {
   
         time.nome = nome;
         time.abreviacao = abreviacao;
-       // time.brasao = brasao;
+        time.brasao = brasao;
 
-        // Salve as alterações no banco de dados
         await time.save();
   
         res.render('./tela_campeonato/exibirTime', {time: time})
@@ -41,11 +41,9 @@ router.post('/editar-time/:id', async (req, res) => {
 
 router.get('/:id', async (req, res)=>{
     try {
-        //const idTime = req.params.id
-
         const time = await Time.findById(req.params.id).populate('jogadores');
-        
-        res.render('./tela_campeonato/exibirTime', {time: time})
+        const campeonato =await Campeonato.findById(time.campeonatoId)
+        res.render('./tela_campeonato/exibirTime', {time: time, campeonato: campeonato})
     } catch (error) {
         res.status(500).json({message: "Erro no servidor"})
     }

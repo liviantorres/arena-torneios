@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Arena Torneios</title>
   <link rel="shortcut icon" href="/logo.png">
-  <link rel="stylesheet" type="text/css" href="estilizacao.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -15,7 +14,7 @@
 <body style="background-color: #0d0d26;">
   <nav class="navbar navbar-expand-lg" style="background-color: #0c0c21;">
     <div class="container-fluid">
-      <a class="navbar-brand" style="margin-left: 15px;" href="#">
+      <a class="navbar-brand" style="margin-left: 15px;" href="/campeonato">
         <img src="/logo.png" alt="Logo" width="68" height="71" class="d-inline-block align-text-top">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -29,7 +28,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item text-light" style="margin-left: 1473px;">
               </li>
-              <a href=""><span style="color: #ccf03b;"> Meus Campeonatos</span>
+              <a href="/campeonato"><span style="color: #ccf03b;"> Meus Campeonatos</span>
               </a> >
             </ul>
             <body>
@@ -58,7 +57,7 @@
             </button>
           </div>
           <div>
-            <button style="border: none; background: none; position: fixed ; right: 380px;  margin-top: -388px;">
+            <button id="criarJogador" style="border: none; background: none; position: fixed ; right: 380px;  margin-top: -388px;">
               <img src="/botao+.png" alt="Ícone Figma" style="height: 65px; width: 117px;">
             </button>
           </div>
@@ -68,20 +67,157 @@
           <span style="color: white; margin-left: 10px; font-size: 19px ;">Jogador</span>
           <span style="color: white; margin-left:700px; font-size: 19px">Nome</span>
         </h1>
-        <p style="color: white; font-size: 24px; margin-top: 250px;"> Ainda não há jogadores</p>
-        
+        <% if (time.jogadores.length> 0) { %>
+          <% time.jogadores.forEach((jogador, i)=> { %>
 
-        
+            <div class="row" style="background-color: #2C2C4A; padding: 10px;">
+              <div class="col">
+                <%= i+1 %>
+              </div>
+              <div class="col">
+                <a href="">
+                  <%= jogador.nome %>
+                </a>
+              </div>
+              <div class="col">
+                
+                  <button onclick="mostrarFormularioEdicao('<%= jogador._id %>', '<%= jogador.nome %>')" type="button" class="btn btn-warning">
+                    Editar
+                  </button>
+                
+                </div>
+                <div class="col">
+                  <form method="POST" action="/jogador/<%=jogador.id%>?_method=DELETE"
+                    onsubmit="return confirm('Tem certeza que deseja excluir o campeonato?');">
+                    <button type="submit" class="btn btn-danger">
+                      Excluir
+                    </button>
+                  </form>
+                
+                </div>
+                <% }); %>
+              <% } else { %>
+                <p style="color: white; font-size: 24px; margin-top: 250px;">Ainda não há jogadores</p>
+                <% } %>
+         </div>
       
+              <div id="overlay" style="display: none;">
+        <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 1196px; height: 491px; background-color: #161642; padding: 70px;">
+          <img id="janelafechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+          <div class="perfil d-flex align-items-center ">
+            <img src="/trofeubranco.png" alt="troféu">
+            <h1 class="mb-0 ms-3">Novo Jogador</h1>
+          </div><br>
+          <hr style="opacity: 100%;">
+          <div class="container">
+            <div class="row ">
+              <div class="col">
+                <form  id="formAdicionarJogador" action="/jogador/" method="post">
+                  <div class="mb-3">
+                    <input type="hidden" name="timeId" value="<%= time._id %>">
+                    <label class="form-label">Nome:</label>
+                    <input name="nome" id="nome" type="text" class="form-control" aria-describedby="emailHelp" required>
+                  </div>
+                
+              </div>
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button class="btn btn-warning" type="submit" id="timesad"
+                  style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+                  <b>ADICIONAR</b></button>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
       </div>
-    </body>
 
- 
+
+      <div id="overlayAtualizar" style="display: none;">
+        <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 1196px; height: 491px; background-color: #161642; padding: 70px;">
+          <img id="janelaAtualizarFechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+          <div class="perfil d-flex align-items-center ">
+            <img src="/trofeubranco.png" alt="troféu">
+            <h1 class="mb-0 ms-3">Editar Jogador:</h1>
+          </div><br>
+          <hr style="opacity: 100%;">
+          <div class="container">
+            <div class="row ">
+              <div class="col">
+                <form  id="formEditarJogador" method="post">
+                  <div class="mb-3">
+                    <label class="form-label">Nome:</label>
+                    <input value=" " name="novoNome" id="novoNome" type="text" class="form-control" aria-describedby="emailHelp" required>
+                  </div>
+                
+              </div>
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button class="btn btn-warning" type="submit" id="timesad"
+                  style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+                  <b>ADICIONAR</b></button>
+              </div>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+
+      
+</div>
+
+
+</body>
+
 <script>
-function goBack() {
-  window.history.back();
-}
-</script>
+
+
+  function adicionarJogador() {
+    // Obtenha os dados do formulário
+    const form = document.getElementById('formAdicionarJogador');
+    const formData = new FormData(form);
+
+    // Envie a solicitação POST
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erro na solicitação: ${response.status}`);
+        }
+        // Se a adição for bem-sucedida, recarregue a página
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Erro ao adicionar jogador:', error);
+        // Lide com o erro de acordo com suas necessidades
+      });
+  }
+
+  function showOverlay() {
+    document.getElementById('overlay').style.display = 'flex';
+    }
+  
+  function hideOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  function fecharAtualizar() {
+    document.getElementById('overlayAtualizar').style.display = 'none';
+  }
+  
+  function mostrarFormularioEdicao(jogadorId, jogadorNome) {
+    document.getElementById('formEditarJogador').action = `/jogador/${jogadorId}?_method=PUT`;
+    document.getElementById('overlayAtualizar').style.display = 'flex';
+  }
+
+  document.getElementById('criarJogador').addEventListener('click', showOverlay);
+  document.getElementById('janelafechar').addEventListener('click', hideOverlay);
+  document.getElementById('janelaAtualizarFechar').addEventListener('click', fecharAtualizar)
+  
+  function goBack() {
+    window.history.back();
+  }
+  </script>
 
 </body>
   </div>

@@ -21,10 +21,6 @@ router.get('/criar-campeonato', (req, res) => {
     res.render('./criaCampeonatoTeste', {error: null})
 })
 
-router.get('/teste', (req, res)=>{
-    res.render('./teste', {login: req.session.user})
-})
-
 router.post('/criar-campeonato', campeonatoController.criarCampeonato)
 
 router.get('/editar-campeonato/:id', async (req, res) => {
@@ -44,8 +40,6 @@ router.get('/editar-campeonato/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 })
-
-//router.post('/editar-campeonato', campeonatoController.editarCampeonato)
 
 router.post('/editar-campeonato/:id', async (req, res) => {
     const campeonatoId = req.params.id;
@@ -76,36 +70,6 @@ router.post('/editar-campeonato/:id', async (req, res) => {
     }
 })
 
-
-//router.delete('/:id', campeonatoController.excluirCampeonato)
-/*
-router.delete('/:id', async (req, res) => {
-    const id = req.params.id
-
-    try {
-        const campeonato = await Campeonato.findOne({_id: id})
-        if(!campeonato){
-            res.status(422).json({message: 'Campeonato não existe'})
-            return
-        }
-        const timesCampeonato = await Time.find({campeonatoId: id})
-        for( const time of timesCampeonato){
-          await Time.deleteOne({_id: time._id})
-        }
-
-        const partidasCampeonato = await Partida.findOne({campeonatoId: id})
-        for (const partida of partidasCampeonato){
-          await Partida.deleteOne({_id: partida._id})
-        }
-
-        await campeonato.deleteOne({_id: id})
-        res.status(200).json({message: 'Campeonato removido com sucesso'})
-
-    } catch (error) {
-        res.status(500).json({error: error})
-    }
-})
-*/
 router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 
@@ -117,13 +81,8 @@ router.delete('/:id', async (req, res) => {
             return;
         }
 
-        // Remover times associados ao campeonato
         await Time.deleteMany({ campeonatoId: id });
-
-        // Remover partidas associadas ao campeonato
         await Partida.deleteMany({ campeonatoId: id });
-
-        // Remover o próprio campeonato
         await campeonato.deleteOne({ _id: id });
 
         res.redirect('/campeonato');
@@ -133,29 +92,52 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-
-
 router.patch('/:id', campeonatoController.editarCampeonato)
 
 router.get('/', campeonatoController.mostrarCampeonatos)
 
 router.get('/:nome', campeonatoController.mostrarCampeonatosPorNome)
 
-
 router.get('/exibirCampeonato/:id', async (req, res)=>{
     try {
-        const idCampeonato = req.params.id
-
         const campeonato = await Campeonato.findById(req.params.id).populate('times');
-        
-
-        //const campeonato = await Campeonato.findOne({_id: idCampeonato});
         res.render('./tela_campeonato/campeonatos', {campeonato: campeonato})
     } catch (error) {
         res.status(500).json({message: "Erro no servidor"})
     }
     
 })
+
+router.delete('/:campeonatoId/times', async (req, res) => {
+    const campeonatoId = req.params.campeonatoId;
+
+    try {
+        // Encontre o campeonato pelo ID
+        const campeonato = await Campeonato.findById(campeonatoId);
+
+        if (!campeonato) {
+            return res.status(404).json({ error: 'Campeonato não encontrado.' });
+        }
+
+        // Obtenha os IDs dos times associados ao campeonato
+        const timeIds = campeonato.times.map(time => time._id);
+
+        // Exclua todos os jogadores associados a esses times
+        await Time.updateMany({ _id: { $in: timeIds } }, { $set: { jogadores: [] } });
+
+        // Exclua todos os times associados a este campeonato no banco de dados
+        await Time.deleteMany({ _id: { $in: timeIds } });
+
+        // Remova todos os times associados a este campeonato no objeto campeonato
+        campeonato.times = [];
+        await campeonato.save();
+
+        res.redirect('/campeonatos');
+    } catch (error) {
+        console.error('Erro ao excluir times e jogadores do campeonato:', error);
+        res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+});
 
 module.exports = router
 

@@ -53,7 +53,7 @@ const criarTime = async (req, res)=>{
 
 const editarTime = async (req, res) => {
     const id = req.params.id
-    const {nome, brasao, abreviacao, campeonatoId} = req.body
+    const {nome, logoContainer, abreviacao, campeonatoId} = req.body
 
     try {
 
@@ -80,7 +80,7 @@ const editarTime = async (req, res) => {
 
 
         time.nome = nome
-        time.brasao = brasao
+        time.brasao = logoContainer
         time.abreviacao = abreviacao
 
         if(campeonatoId){

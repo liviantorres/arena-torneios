@@ -2,6 +2,7 @@ const Jogador = require('../models/Jogador')
 const Time = require('../models/Time')
 
 const criarJogador = async (req, res) => {
+    
     try {
       const { nome, timeId } = req.body;
   
@@ -14,7 +15,7 @@ const criarJogador = async (req, res) => {
         }
       
       try{ 
-            const time = await Time.findOne({_id: timeId})
+            const time = await Time.findOne({_id: timeId}).populate('jogadores')
             const jogador = new Jogador({
                 nome,
                 timeId: timeId,
@@ -24,7 +25,7 @@ const criarJogador = async (req, res) => {
               time.jogadores.push(jogador);
               await time.save();
           
-              res.status(201).json({ message: 'Jogador inserido com sucesso' });
+              res.render('./tela-jogador', {time: time});
 
       }catch(erro){
         return res.status(404).json({ message: 'Time não encontrado' });
@@ -95,7 +96,7 @@ const excluirJogador = async (req, res) => {
         return
       }
   
-      const timeJogador = await Time.findOne({_id: jogador.timeId})
+      const timeJogador = await Time.findOne({_id: jogador.timeId}).populate('jogadores')
   
       if(timeJogador){
         timeJogador.jogadores.pull(jogador._id)
@@ -103,7 +104,7 @@ const excluirJogador = async (req, res) => {
       }
   
       await Jogador.deleteOne({_id: id})
-      res.status(200).json({message: 'Jogador removido com sucesso'})
+      res.render('./tela-jogador', {time : timeJogador})
       
     } catch (error) {
       res.status(500).json({error: error})
