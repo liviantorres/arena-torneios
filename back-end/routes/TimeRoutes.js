@@ -8,11 +8,7 @@ router.post('/:id', timeController.criarTime)
 
 router.patch('/:id', timeController.editarTime)
 
-//router.delete('/:id', timeController.excluirTime)
-
 router.get('/', timeController.mostrarTime)
-
-//router.get('/:nome', timeController.mostrarTimePorNome)
 
 router.post('/editar-time/:id', async (req, res) => {
     const timeId = req.params.id;

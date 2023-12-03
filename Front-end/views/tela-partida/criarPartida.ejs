@@ -55,6 +55,18 @@
     justify-content: center;
     align-items: center;
 }
+
+#overlay5 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
 </style>
 </head>
 <body>
@@ -64,7 +76,7 @@
        #161642; padding: 30px; ">
        <img id="janelafechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
        <form id="formPartida" action="/partida/editarPartidaExistente/<%=partida._id%>" method="post">
-    
+    <input type="hidden" id="partidaId" name="partidaId" value="<%=partida._id%>">
         <div class="perfil d-flex align-items-center ">
             <img src="/campo_futebol.png" alt="troféu">  <h1 class="mb-0 ms-3">Detalhes da Partida</h1> 
           </div>
@@ -80,7 +92,7 @@
                     <label class="form-label">Time:</label>
                     
                     <select name="timeCasaId" id="timeCasaId" class="form-select" aria-label="Default select example">
-                      <option selected>Selecione</option>
+                     
                       <% campeonato.times.forEach(function(time) { %>
                           <option value="<%= time.id %>"><%= time.nome %></option>
                       <% }); %>
@@ -88,7 +100,7 @@
                       <label class="form-label">Placar:</label>
                       <input type="text" class="form-control" id="placarTimeCasa" name="placarTimeCasa" aria-describedby="emailHelp">
                       <div class="d-grid gap-2 col-12 mx-auto">
-                        <button class="btn " type="button" id="pontuador" style="margin-top: 18px; background-color: #ccf03b; color: rgb(61, 58, 58); --bs-btn-hover-bg: #ccf03b;">
+                        <button class="btn " type="button" id="pontuadorTimeCasa" style="margin-top: 18px; background-color: #ccf03b; color: rgb(61, 58, 58); --bs-btn-hover-bg: #ccf03b;">
                           <b>Pontuadores</b></button>
                           
                       </div> <hr style="opacity: 100%;">
@@ -99,7 +111,7 @@
              <h4>EQUIPE 02</h4>
              <label class="form-label">Time:</label>
              <select name="timeForaId" id="timeForaId" class="form-select" aria-label="Default select example">
-               <option selected>Selecione</option>
+               
                <% campeonato.times.forEach(function(time) { %>
                   <option value="<%= time.id %>"><%= time.nome %></option>
                 <% }); %>
@@ -107,7 +119,7 @@
                <label class="form-label">Placar:</label>
                <input type="text" class="form-control" id="placarTimeFora" name="placarTimeFora" aria-describedby="emailHelp">
                <div class="d-grid gap-2 col-12 mx-auto">
-                 <button class="btn " type="button" id="timesad" style="margin-top: 18px; background-color: #ccf03b; color: rgb(61, 58, 58); --bs-btn-hover-bg: #ccf03b;">
+                 <button class="btn " type="button" id="pontuadorTimeFora" style="margin-top: 18px; background-color: #ccf03b; color: rgb(61, 58, 58); --bs-btn-hover-bg: #ccf03b;">
                    <b>Pontuadores</b></button>
                           </div>
                           <hr style="opacity: 100%;">
@@ -157,34 +169,87 @@
     </div>
   </div>
 
+
+
+  <div id="overlay4">
+    <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 800px; height: 470px; background-color:
+       #262633; padding: 20px; ">
+       <img id="pontuadorTimeCasaFechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+      <form >
+        <div class="container">
+        <div class="perfil d-flex align-items-center">
+             <h3 class="mb-0 ms-3">Pontuadores - Equipe 01</h3> 
+          </div>
+          <hr style="opacity: 100%;">
+         <div class="row justify-content-center" style="background-color: #2c2c4a; height: 50px;">
+          <div class="col-5" style="margin-top: 6px;">
+            Jogador
+          </div>
+          <div class="col-4" style="margin-top: 6px;">
+            Momento da pontuação
+          </div>
+         </div></div>
+         <div class="container text-center" style="height: 270px; background-color: #212129;">
+         <br><br><br><br> Nenhum pontuador na partida
+        </div>
+      <div class="d-grid gap-2 col-12 mx-auto">
+        <button class="btn btn-warning" type="button" id="pontuadorAdcTimeCasa" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+          <b>ADICIONAR PONTUADOR</b></button>
+      </div>
+      </form>
+    </div>
+  </div>
+
+
 </body>
 
 <script>
     /*
-    $(document).ready(function () {
-        // Manipula o clique no botão
-        $("#btnSalvar").on("click", function () {
-            // Obtém os dados do formulário
-            var formData = $("#formPartida").serialize();
+    document.getElementById('pontuadorTimeCasa').addEventListener('click', function() {
+      document.getElementById('overlay4').style.display = 'flex';
+    });
+    document.getElementById('pontuadorTimeCasaFechar').addEventListener('click', function() {
+      document.getElementById('overlay4').style.display = 'none';
+    });
 
-            // Envia a requisição AJAX
-            $.ajax({
-                type: "PUT",
-                url: $("#formPartida").attr("action"),
-                data: formData,
-                success: function (response) {
-                    // Lidar com a resposta do servidor, se necessário
-                    console.log(response);
+    document.getElementById('pontuadorTimeFora').addEventListener('click', function() {
+      document.getElementById('overlay5').style.display = 'flex'; 
+    });
 
-                    // Recarregar a página ou redirecionar para outra página, se necessário
-                    window.location.href = "/editarPartida/<%=partida._id%>";
-                },
-                error: function (error) {
-                    console.error(error);
-                    // Lidar com erros, se necessário
-                }
-            });
-        });
+    document.getElementById('pontuadorTimeForaFechar').addEventListener('click', function() {
+      document.getElementById('overlay5').style.display = 'none'; 
+    });
+
+    document.getElementById('pontuadorAdcTimeCasa').addEventListener('click', function() {
+      document.getElementById('overlay3').style.display = 'flex'; 
+    });
+
+    document.getElementById('pontuadorAdcTimeFora').addEventListener('click', function() {
+      document.getElementById('overlay3').style.display = 'flex'; 
     });*/
+
+    document.getElementById('pontuadorTimeCasa').addEventListener('click', function() {
+        // Obtenha os valores dos IDs do time e da partida
+        const timeCasaId = document.getElementById('timeCasaId').value;
+        const partidaId = document.getElementById('partidaId').value;  // Substitua pelo ID real da partida
+
+        // Redirecione o usuário para a nova tela com os parâmetros na URL
+        window.location.href = '/pontuador/' + partidaId + '/' + timeCasaId;
+    });
+
+    document.getElementById('pontuadorTimeFora').addEventListener('click', function() {
+        // Obtenha os valores dos IDs do time e da partida
+        const timeForaId = document.getElementById('timeForaId').value;
+        const partidaId = document.getElementById('partidaId').value;  // Substitua pelo ID real da partida
+
+        // Redirecione o usuário para a nova tela com os parâmetros na URL
+        window.location.href = '/pontuador/pontuadorTimeFora/' + partidaId + '/' + timeForaId;
+    });
+
+    document.getElementById('janelafechar3').addEventListener('click', function() {
+      document.getElementById('overlay3').style.display = 'none'; 
+    });
+
+
 </script>
 </html>

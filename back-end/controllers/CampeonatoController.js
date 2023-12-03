@@ -19,7 +19,6 @@ const criarCampeonato = async (req, res) => {
       return res.status(404).json({ error: 'Usuário não encontrado!' });
     }
 
-    // Crie o campeonato
     const novoCampeonato = await Campeonato.create({
       nome,
       descricao,
@@ -29,7 +28,6 @@ const criarCampeonato = async (req, res) => {
       usuarioId: usuario._id,
     });
 
-    // Adicione partidas ao campeonato
     await adicionarPartidasAoCampeonato(novoCampeonato._id, quantidade_times);
 
     res.redirect('/campeonato');
@@ -37,18 +35,14 @@ const criarCampeonato = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-// Função para adicionar partidas ao campeonato
 async function adicionarPartidasAoCampeonato(campeonatoId, quantidadeTimes) {
   const partidasVazias = gerarPartidasVazias(quantidadeTimes, campeonatoId);
 
-  // Crie os registros no banco de dados para as partidas vazias
   const partidasCriadas = await Partida.insertMany(partidasVazias);
 
-  // Atualize o campeonato com os IDs das partidas criadas
   await Campeonato.findByIdAndUpdate(campeonatoId, { $push: { partidas: { $each: partidasCriadas } } });
 }
 
-// Função para gerar partidas vazias com apenas o ID do campeonato
 function gerarPartidasVazias(quantidadeTimes, campeonatoId) {
   const partidasVazias = [];
   
@@ -56,7 +50,6 @@ function gerarPartidasVazias(quantidadeTimes, campeonatoId) {
     for (let j = i + 1; j < quantidadeTimes; j++) {
       const partida = {
         campeonatoId,
-        // Outras propriedades da partida, se necessário
       };
       partidasVazias.push(partida);
     }
@@ -155,14 +148,16 @@ const editarCampeonato = async (req, res) => {
 
 const mostrarCampeonatos = async (req, res)=>{
     try {
-      const usuarioEmail = req.session.user//
+      const usuarioEmail = req.session.user
+
       const usuario = await User.findOne({email: usuarioEmail});
       if(!usuario){
         return res.status(404).json({error: 'Usuário não encontrado!'})
       }
        const campeonato = await Campeonato.find({usuarioId: usuario._id});
-       res.render('./tela_campeonato/infoCampeonato', { campeonato: campeonato });
-       //res.render('./tela_campeonato/infoCampeonato');
+       
+       res.render('./tela_campeonato/infoCampeonato', { campeonato: campeonato, usuario: usuario});
+       
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

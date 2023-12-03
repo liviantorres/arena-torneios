@@ -2,23 +2,13 @@ const router = require('express').Router();
 const userController = require('../controllers/userController')
 
 const User = require('../models/User')
-
-
-/* // Rota protegida que usa o middleware de verificação de autenticação
-  app.get('/restrito', verificaAutenticacao, (req, res) => {
-    res.send('Esta é uma rota protegida!');
-  });
-*/
-//router.post('/register', userController.registrarUsuario)
-
-//router.post('/login', userController.loginUsuario)
  
 router.get('/', userController.mostrarUsuarios)
 
 router.get('/:id', userController.mostrarUsuariosPorId)
-
-router.put('/editar-usuario', async (req, res) => {
-  const userEmail = req.session.user; 
+/*
+router.put('/editar-usuario/:emailUsuario', async (req, res) => {
+  const userEmail = req.params.emailUsuario; 
 
   const usuarioLogado = await User.findOne({email: userEmail});
 
@@ -44,6 +34,46 @@ router.put('/editar-usuario', async (req, res) => {
       res.redirect('/campeonato');
   } catch (error) {
       res.status(500).json({ error: error.message });
+  }
+});
+*/
+router.put('/editar-usuario/:emailUsuario', async (req, res) => {
+  const userEmail = req.params.emailUsuario; 
+
+  try {
+    const usuarioAtualizado = await User.findOneAndUpdate(
+      { email: userEmail },
+      { $set: req.body },
+      { new: true } // Retorna o documento atualizado
+    );
+
+    if (!usuarioAtualizado) {
+      return res.status(422).json({ message: 'O usuário não foi encontrado ou não houve alterações' });
+    }
+
+    res.redirect('/campeonato');
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/editar-usuario/:emailUsuario', async (req, res) => {
+  const userEmail = req.params.emailUsuario; 
+
+  try {
+    const usuarioAtualizado = await User.findOneAndUpdate(
+      { email: userEmail },
+      { $set: req.body },
+      { new: true } // Retorna o documento atualizado
+    );
+
+    if (!usuarioAtualizado) {
+      return res.status(422).json({ message: 'O usuário não foi encontrado ou não houve alterações' });
+    }
+
+    res.redirect('/');
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

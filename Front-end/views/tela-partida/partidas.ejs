@@ -179,6 +179,180 @@
 
     </div>
    <% } else if((campeonato.quantidade_times) == 8) {%>
+    <div>
+      <button style="background: none; border: none; margin-left: 60px; width: 150px; height: 60px; margin-top: 16px; position: absolute;">
+      <img src="/botaovoltar.png" alt=""></button>
+    </div>
+  
+    
+    <div style="width: 1253px; height: 700px; background: linear-gradient(to bottom right, #1B1B31 50%, #20203D 50%); margin-left: 250px; margin-top: 30px; position: relative;">
+      <img src="/logo.png" alt="Logo" width="112" height="127" class="d-inline-block align-text-top" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+      <div class="retanguloF" style="width: 280px; height: 212px; background-color: #373762; position: absolute; top: 15%; left: 50%; transform: translate(-50%, -50%); border-bottom-left-radius: 20%; border-bottom-right-radius: 20%;">
+        <h1 style="color: white; margin-left: 42%; font-size: 25px; margin-top: 101px;">Final</h1>
+        <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 50px;">
+            <% if (campeonato.partidas[6].timeCasaBrasao) { %> 
+              <img src="<%=campeonato.partidas[6].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+            <% } else { %>
+              <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+            <%}%>
+        </div>
+        <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 201px; margin-top: -36px;">
+            <% if (campeonato.partidas[6].timeForaBrasao) { %> 
+              <img src="<%=campeonato.partidas[6].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+            <% } else { %>
+              <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+            <%}%>
+        </div>
+        <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 110px; margin-top: -30px; margin-right: 152px;">
+          <b><%=campeonato.partidas[6].placarTimeCasa%></b>
+        </div>
+        <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 153px; margin-top: -26px; margin-right: 116px;">
+          <b><%=campeonato.partidas[6].placarTimeFora%></b>
+        </div></a>
+           </div>
+           <div class="confronto1" style="width: 200px; height: 50px; background-color: #CCF03B; border-radius: 30px; margin-left: 219px; margin-top: 205px; position: absolute;">
+            <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 20px; margin-top: 7px;">
+                <% if (campeonato.partidas[0].timeCasaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[0].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div>
+              <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 144px; margin-top: -36px;">
+                <% if (campeonato.partidas[0].timeForaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[0].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div> </a>
+              <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 69px; margin-top: -30px; margin-right: 152px;">
+                <b><%=campeonato.partidas[0].placarTimeCasa%></b>
+              </div>
+              <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 104px; margin-top: -26px; margin-right: 116px;">
+                <b><%=campeonato.partidas[0].placarTimeFora%></b>
+              </div>
+          </div>
+          <div class="confronto2" style="width: 200px; height: 50px; background-color: #CCF03B; border-radius: 30px; margin-left: 219px; margin-top: 365px; position: absolute;">
+            <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 20px; margin-top: 7px;">
+                <% if (campeonato.partidas[1].timeCasaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[1].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div>
+              <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 144px; margin-top: -36px;">
+                <% if (campeonato.partidas[1].timeForaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[1].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div> </a>
+              <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 69px; margin-top: -30px; margin-right: 152px;">
+                <b><%=campeonato.partidas[1].placarTimeCasa%></b>
+              </div>
+              <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 104px; margin-top: -26px; margin-right: 116px;">
+                <b><%=campeonato.partidas[1].placarTimeFora%></b>
+              </div>
+          </div>
+          <div class="confronto3" style="width: 200px; height: 50px; background-color: #6EA7E9; border-radius: 30px; margin-left: 845px; margin-top: 205px; position: absolute;">
+            <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 20px; margin-top: 7px;">
+                <% if (campeonato.partidas[2].timeCasaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[2].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div>
+              <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 144px; margin-top: -36px;">
+                <% if (campeonato.partidas[2].timeForaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[2].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div> </a>
+              <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 69px; margin-top: -30px; margin-right: 152px;">
+                <b><%=campeonato.partidas[2].placarTimeCasa%></b>
+              </div>
+              <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 104px; margin-top: -26px; margin-right: 116px;">
+                <b><%=campeonato.partidas[2].placarTimeFora%></b>
+              </div>
+          </div>
+          <div class="confronto2" style="width: 200px; height: 50px; background-color: #6EA7E9; border-radius: 30px; margin-left: 845px; margin-top: 365px; position: absolute;">
+            <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 20px; margin-top: 7px;">
+                <% if (campeonato.partidas[3].timeCasaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[3].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div>
+              <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 144px; margin-top: -36px;">
+                <% if (campeonato.partidas[3].timeForaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[3].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div></a>
+              <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 69px; margin-top: -30px; margin-right: 152px;">
+                <b><%=campeonato.partidas[3].placarTimeCasa%></b>
+              </div>
+              <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 104px; margin-top: -26px; margin-right: 116px;">
+                <b><%=campeonato.partidas[3].placarTimeFora%></b>
+              </div>
+          </div>
+          <div class="semi1" style="width: 200px; height: 50px; background-color: #C93F3F; border-radius: 30px; margin-left: 384px; margin-top: 285px; position: absolute;">
+            <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 20px; margin-top: 7px;">
+                <% if (campeonato.partidas[4].timeCasaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[4].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div>
+              <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 144px; margin-top: -36px;">
+                <% if (campeonato.partidas[4].timeForaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[4].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div></a>
+              <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 69px; margin-top: -30px; margin-right: 152px;">
+                <b><%=campeonato.partidas[4].placarTimeCasa%></b>
+              </div>
+              <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 104px; margin-top: -26px; margin-right: 116px;">
+                <b><%=campeonato.partidas[4].placarTimeFora%></b>
+              </div>
+          </div>
+          <div class="semi1" style="width: 200px; height: 50px; background-color: #C93F3F; border-radius: 30px; margin-left: 680px; margin-top: 285px; position: absolute;">
+            <a href="/partida/editarPartida/<%=campeonato.partidas[0]._id%>"><div class="circle" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 20px; margin-top: 7px;">
+                <% if (campeonato.partidas[5].timeCasaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[5].timeCasaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div>
+              <div class="circle2" style="width: 36px; height: 36px; background-color: white; border-radius: 50%; margin-left: 144px; margin-top: -36px;">
+                <% if (campeonato.partidas[5].timeForaBrasao) { %> 
+                  <img src="<%=campeonato.partidas[5].timeForaBrasao%>" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <% } else { %>
+                  <img src="/logo.png" alt="" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+                <%}%>
+              </div></a>
+              <div class="circleM" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 69px; margin-top: -30px; margin-right: 152px;">
+                <b><%=campeonato.partidas[5].placarTimeCasa%></b>
+              </div>
+              <div class="circleM2" style="width: 26px; height: 26px; background-color: white; border-radius: 50%; margin-left: 104px; margin-top: -26px; margin-right: 116px;">
+                <b><%=campeonato.partidas[5].placarTimeFora%></b>
+              </div>
+          </div>
+          <hr style="border-left: 2px; height: 120px; width: 110px; margin-left: 210px; color: #4B4B85; transform: rotate(90deg);margin-top: 250px; position: absolute; border-width: 3px;">
+          <hr style="color: white; height: 120px; width: 62px; margin-top: 308px; position: absolute; margin-left: 322px; color: #4B4B85;border-width: 3px;">
+          <hr style="color: white; height: 120px; width: 96px; margin-top: 308px; position: absolute; margin-left: 584px; color: #4B4B85;border-width: 3px;">
+          <hr style="border-left: 2px; height: 120px; width: 110px; margin-left: 830px; color: #4B4B85; transform: rotate(90deg);margin-top: 250px; position: absolute; border-width: 3px;">
+          <hr style="color: white; height: 120px; width: 65px; margin-top: 308px; position: absolute; margin-left: 880px; color: #4B4B85;border-width: 3px;">
+          <hr style="border-left: 2px; height: 120px; width: 100px; margin-left: 520px; color: #4B4B85; transform: rotate(90deg);margin-top: 201px; position: absolute; border-width: 3px;">
+
+    </div>
+
+
+  <% }  else if((campeonato.quantidade_times) == 16) { %>
     <div class="container-xxl" style="height: 540px; margin-top: 30px; background: linear-gradient(to bottom right, #0f0f3c 50%, #161642 50%);">
       <br><br><br><br><br><br><br><br><br>
       <div class="central">
@@ -189,76 +363,9 @@
             <b>GERAR PARTIDAS</b></button>
         </div></div>
     </div>
-  <% }  else if((campeonato.quantidade_times) == 16) { %>
-
     <% } %>
 
 
-  <div id="overlay4">
-    <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 800px; height: 470px; background-color:
-       #262633; padding: 20px; ">
-       <img id="pontuadorfechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
-      <form >
-        <div class="container">
-        <div class="perfil d-flex align-items-center">
-             <h3 class="mb-0 ms-3">Pontuadores - Equipe 01</h3> 
-          </div>
-          <hr style="opacity: 100%;">
-         <div class="row justify-content-center" style="background-color: #2c2c4a; height: 50px;">
-          <div class="col-5" style="margin-top: 6px;">
-            Jogador
-          </div>
-          <div class="col-4" style="margin-top: 6px;">
-            Momento da pontuação
-          </div>
-         </div></div>
-         <div class="container text-center" style="height: 270px; background-color: #212129;">
-         <br><br><br><br> Nenhum pontuador na partida
-        </div>
-      <div class="d-grid gap-2 col-12 mx-auto">
-        <button class="btn btn-warning" type="button" id="timesad" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
-          <b>ADICIONAR PONTUADOR</b></button>
-      </div>
-      </form>
-    </div>
-  </div>
-
-  
-  <div id="overlay3">
-    <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 600px; height: 300px; background-color:
-       #161642; padding: 30px; ">
-       <img id="janelafechar3" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
-      <form>      <br>
-                  <h5>Nome do jogador:</h5>
-                  <input type="email" class="form-control" id="" aria-describedby="emailHelp">
-                <br>
-                    <h5>Momento da pontuação:</h5>
-                    <input type="email" class="form-control" id="" aria-describedby="emailHelp">
-                  <br>
-                <div class="d-grid gap-2 col-12 mx-auto">
-                  <button class="btn btn-warning" type="button" id="timesad" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
-                    <b>SALVAR</b></button>
-              
-              </div>
-          </div>
-      </form>
-  </div>
-
-  <div id="overlay4">
-    <div class="container text-light col-lg-3 position-absolute text-center" style="margin-top: 40px; width: 320px; height: 200px; background-color:
-       #161642; padding: 30px;">
-       <img id="janelafechar3" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
-      <form>      <br>
-                  <h6>Tem certeza que deseja excluir o jogador do time?</h6>
-                  <br>
-                <div class="d-grid gap-2 col-12 mx-auto">
-                  <button class="btn btn-warning" type="button" id="timesad" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
-                    <b>EXCLUIR</b></button>
-              
-              </div>
-          </div>
-      </form>
-  </div>
 
 <script>
   document.getElementById('criarcampeonato').addEventListener('click', function() {

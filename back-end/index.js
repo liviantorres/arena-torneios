@@ -55,6 +55,7 @@ const jogadorRoutes = require('./routes/JogadorRoutes')
 const timeRoutes = require('./routes/TimeRoutes')
 const campeonatoRoutes = require('./routes/CampeonatoRoutes')
 const partidaRoutes = require('./routes/PartidaRoutes')
+const pontuadorRoutes = require('./routes/PontuadorRoutes')
 
 app.use('/usuario', verificaAutenticacao, userRoutes)
 app.use('/jogador', verificaAutenticacao, jogadorRoutes)
@@ -62,6 +63,7 @@ app.use('/time', verificaAutenticacao, timeRoutes)
 app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
 //app.use('/campeonato', campeonatoRoutes)
 app.use('/partida', verificaAutenticacao, partidaRoutes)
+app.use('/pontuador', verificaAutenticacao, pontuadorRoutes)
 
 // rota inicial 
 app.get('/', (req, res) =>{

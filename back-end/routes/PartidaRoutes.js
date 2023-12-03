@@ -3,6 +3,52 @@ const router = require('express').Router();
 const Campeonato = require('../models/Campeonato');
 const Partida = require('../models/Partida')
 const Time = require('../models/Time')
+const Pontuador = require('../models/Pontuador')
+
+router.post('/criarPontuador/:idPartida/:timeId', async (req, res) => {
+
+    const partidaId = req.params.idPartida;
+    const timeId = req.params.timeId;
+    const { nomeJogador, horaMomentoPontuacao } = req.body;
+
+    try {
+        
+        const partida = await Partida.findById(partidaId);
+        if (!partida) {
+            return res.status(404).json({ message: "Partida não encontrada" });
+        }
+
+        const campeonato = await Campeonato.findById(partida.campeonatoId);
+        if (!campeonato) {
+            return res.status(404).json({ message: "Campeonato não encontrado" });
+        }
+
+        
+        const pontuador = new Pontuador({
+            nomeJogador: nomeJogador,
+            horaMomentoPontuacao: horaMomentoPontuacao,
+            partidaId: partidaId,
+            timeId: timeId
+        });
+
+    
+        await pontuador.save();
+
+        partida.jogadorPontuacao.push(pontuador._id);
+        await partida.save();
+
+        if(timeId == partida.timeCasaId){
+            res.redirect(`/pontuador/${partida._id}/${timeId}`);
+        }else{
+            res.redirect(`/pontuador/pontuadorTimeFora/${partida._id}/${timeId}`);
+        }
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erro no servidor" });
+    }
+})
+
 
 router.get('/:idCampeonato/exibirPartidas', async (req, res) => {
     const idCampeonato = req.params.idCampeonato;
@@ -23,21 +69,19 @@ router.post('/editar-campeonato/:id', async (req, res) => {
     const { nome, descricao, quantidade_times, premiacao, forma_competicao } = req.body;
   
     try {
-        // Verifique se o campeonato existe
+
         const campeonato = await Campeonato.findById(campeonatoId);
   
         if (!campeonato) {
             return res.status(404).json({ error: 'Campeonato não encontrado' });
         }
   
-        // Atualize os campos do campeonato
         campeonato.nome = nome;
         campeonato.descricao = descricao;
         campeonato.quantidade_times = quantidade_times;
         campeonato.premiacao = premiacao;
         campeonato.forma_competicao = forma_competicao;
   
-        // Salve as alterações no banco de dados
         await campeonato.save();
   
         res.redirect('/campeonato')
@@ -45,7 +89,6 @@ router.post('/editar-campeonato/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 })
-
 
 router.post('/editarPartidaExistente/:idPartida', async (req, res)=>{
     const partidaId = req.params.idPartida;
@@ -101,7 +144,6 @@ router.get('/editarPartida/:idPartida', async (req, res)=>{
         res.render('./tela-partida/criarPartida', {campeonato: campeonato, partida: partida});
 
     } catch (error) {
-        console.log(error);
         res.status(500).json({ message: "Erro no servidor" });
     }
 
