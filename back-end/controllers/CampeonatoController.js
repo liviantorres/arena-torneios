@@ -5,33 +5,64 @@ const Time = require('../models/Time');
 const User = require('../models/User');
 
 const criarCampeonato = async (req, res) => {
-    const { nome, descricao, quantidade_times, premiacao, forma_competicao } = req.body;
-    
-    if (!nome || !descricao || !quantidade_times || !premiacao || !forma_competicao) {
-      return res.status(422).json({ error: 'Todos os campos são obrigatórios' });
-    }
-    
-    //const login = req.session.login
-    try {
-      const usuarioEmail = req.session.user//
-      const usuario = await User.findOne({email: usuarioEmail});
-      if(!usuario){
-        return res.status(404).json({error: 'Usuário não encontrado!'})
-      }
+  const { nome, descricao, quantidade_times, premiacao, forma_competicao } = req.body;
 
-      const campeonato = {
-        nome,
-        descricao,
-        quantidade_times,
-        premiacao,
-        forma_competicao,
-        usuarioId : usuario._id
+  if (!nome || !descricao || !quantidade_times || !premiacao || !forma_competicao) {
+    return res.status(422).json({ error: 'Todos os campos são obrigatórios' });
+  }
+
+  try {
+    const usuarioEmail = req.session.user;
+    const usuario = await User.findOne({ email: usuarioEmail });
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado!' });
+    }
+
+    // Crie o campeonato
+    const novoCampeonato = await Campeonato.create({
+      nome,
+      descricao,
+      quantidade_times,
+      premiacao,
+      forma_competicao,
+      usuarioId: usuario._id,
+    });
+
+    // Adicione partidas ao campeonato
+    await adicionarPartidasAoCampeonato(novoCampeonato._id, quantidade_times);
+
+    res.redirect('/campeonato');
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+// Função para adicionar partidas ao campeonato
+async function adicionarPartidasAoCampeonato(campeonatoId, quantidadeTimes) {
+  const partidasVazias = gerarPartidasVazias(quantidadeTimes, campeonatoId);
+
+  // Crie os registros no banco de dados para as partidas vazias
+  const partidasCriadas = await Partida.insertMany(partidasVazias);
+
+  // Atualize o campeonato com os IDs das partidas criadas
+  await Campeonato.findByIdAndUpdate(campeonatoId, { $push: { partidas: { $each: partidasCriadas } } });
+}
+
+// Função para gerar partidas vazias com apenas o ID do campeonato
+function gerarPartidasVazias(quantidadeTimes, campeonatoId) {
+  const partidasVazias = [];
+  
+  for (let i = 0; i < quantidadeTimes - 1; i++) {
+    for (let j = i + 1; j < quantidadeTimes; j++) {
+      const partida = {
+        campeonatoId,
+        // Outras propriedades da partida, se necessário
       };
-      await Campeonato.create(campeonato);
-      res.redirect('/campeonato');
-    } catch (error) {
-      res.status(500).json({ error: error });
-    }  
+      partidasVazias.push(partida);
+    }
+  }
+
+  return partidasVazias;
 }
 
 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arena Torneios</title>
+<link rel="shortcut icon" href="/logo.png">
+<link rel="stylesheet" type="text/css" href="estilo.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<style>
+    #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay3 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay4 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+</style>
+</head>
+<body>
+    
+<div id="overlay2">
+    <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 1000px; height: 570px; background-color:
+       #161642; padding: 30px; ">
+       <img id="janelafechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
+       <form id="formPartida" action="/partida/editarPartidaExistente/<%=partida._id%>" method="post">
+    
+        <div class="perfil d-flex align-items-center ">
+            <img src="/campo_futebol.png" alt="troféu">  <h1 class="mb-0 ms-3">Detalhes da Partida</h1> 
+          </div>
+          <hr style="opacity: 100%;">
+          <div class="container">
+            <div class="row ">
+              <div class="col">
+              <div class="row">
+              <div class="col">
+                <form>
+                  <div class="mb-3">
+                    <h4>EQUIPE 01</h4>
+                    <label class="form-label">Time:</label>
+                    
+                    <select name="timeCasaId" id="timeCasaId" class="form-select" aria-label="Default select example">
+                      <option selected>Selecione</option>
+                      <% campeonato.times.forEach(function(time) { %>
+                          <option value="<%= time.id %>"><%= time.nome %></option>
+                      <% }); %>
+                    </select><br>
+                      <label class="form-label">Placar:</label>
+                      <input type="text" class="form-control" id="placarTimeCasa" name="placarTimeCasa" aria-describedby="emailHelp">
+                      <div class="d-grid gap-2 col-12 mx-auto">
+                        <button class="btn " type="button" id="pontuador" style="margin-top: 18px; background-color: #ccf03b; color: rgb(61, 58, 58); --bs-btn-hover-bg: #ccf03b;">
+                          <b>Pontuadores</b></button>
+                          
+                      </div> <hr style="opacity: 100%;">
+                    </div></div>
+                    
+                    <div class="col">
+                      <div class="mb-3">
+             <h4>EQUIPE 02</h4>
+             <label class="form-label">Time:</label>
+             <select name="timeForaId" id="timeForaId" class="form-select" aria-label="Default select example">
+               <option selected>Selecione</option>
+               <% campeonato.times.forEach(function(time) { %>
+                  <option value="<%= time.id %>"><%= time.nome %></option>
+                <% }); %>
+             </select><br>
+               <label class="form-label">Placar:</label>
+               <input type="text" class="form-control" id="placarTimeFora" name="placarTimeFora" aria-describedby="emailHelp">
+               <div class="d-grid gap-2 col-12 mx-auto">
+                 <button class="btn " type="button" id="timesad" style="margin-top: 18px; background-color: #ccf03b; color: rgb(61, 58, 58); --bs-btn-hover-bg: #ccf03b;">
+                   <b>Pontuadores</b></button>
+                          </div>
+                          <hr style="opacity: 100%;">
+                        </div></div></div>
+                   <div class="row">
+                    <div class="col">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Cartões amarelos:</label>
+                          <input name="qtdCartaoAmarelo" type="text" class="form-control" id="qtdCartaoAmarelo" aria-describedby="emailHelp">
+                        
+                            <label class="form-label">Chutes ao gol:</label>
+                            <input name="chutesAOGol" type="text" class="form-control" id="chutesAOGol" aria-describedby="emailHelp">
+                          </div></div>
+                          
+                          <div class="col">
+                            <div class="mb-3">
+                   <label class="form-label">Cartões vermelhos:</label>
+                   <input type="text" class="form-control" id="qtdCartaoVermelho" aria-describedby="emailHelp">
+                     <label class="form-label">Faltas:</label>
+                     <input name="qtdFalta" type="text" class="form-control" id="qtdFalta" aria-describedby="emailHelp">
+                              </div></div>
+              </div></div>
+              <div class="col">
+                <h5>LOCAL:</h5>
+                <input name="local" type="text" class="form-control" id="local" aria-describedby="emailHelp">
+                  <br>
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <h5>HORÁRIO:</h5>
+                        <input name="horario" type="text" class="form-control" id="horario" aria-describedby="emailHelp">
+                      </div></div>
+                      <div class="col">
+                        <div class="mb-3">
+                          <h5>DATA:</h5>
+                          <input type="text" class="form-control" id="data" aria-describedby="emailHelp">
+                      </div></div></div><br>
+                <div class="d-grid gap-2 col-12 mx-auto">
+                  
+                    <button class="btn btn-warning" type="submit" id="btnSalvar" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
+                    <b>SALVAR</b></button>
+                </div>
+              </div>
+          </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+<script>
+    /*
+    $(document).ready(function () {
+        // Manipula o clique no botão
+        $("#btnSalvar").on("click", function () {
+            // Obtém os dados do formulário
+            var formData = $("#formPartida").serialize();
+
+            // Envia a requisição AJAX
+            $.ajax({
+                type: "PUT",
+                url: $("#formPartida").attr("action"),
+                data: formData,
+                success: function (response) {
+                    // Lidar com a resposta do servidor, se necessário
+                    console.log(response);
+
+                    // Recarregar a página ou redirecionar para outra página, se necessário
+                    window.location.href = "/editarPartida/<%=partida._id%>";
+                },
+                error: function (error) {
+                    console.error(error);
+                    // Lidar com erros, se necessário
+                }
+            });
+        });
+    });*/
+</script>
+</html>

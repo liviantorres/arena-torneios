@@ -4,19 +4,23 @@ const Partida = mongoose.model('Partida', {
     data: String,
     horario: String,
     local: String,
-    timeCasaId: String,
+    timeCasaId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Time' // ou o nome do seu modelo Time
+    },
+    timeCasaBrasao: String,
     timeForaId: String,
-    premiacao: String,
-    formaCompeticao: String,
+    timeForaBrasao:String ,
     placarTimeCasa: Number,
     placarTimeFora: Number,
     jodadorPontuacao: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Jogador'
     }],
-    horaMomentoPontuacao: String,
+    //horaMomentoPontuacao: String,
     qtdCartaoAmarelo: Number,
     qtdCartaoVermelho: Number,
+    chutesAOGol: Number,
     qtdFalta: Number ,
     campeonatoId: String
 })
