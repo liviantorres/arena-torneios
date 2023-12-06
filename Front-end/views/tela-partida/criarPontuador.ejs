@@ -93,8 +93,14 @@
          <% if (partida.jogadorPontuacao && Array.isArray(partida.jogadorPontuacao) && partida.jogadorPontuacao.length > 0) { %>
             <% partida.jogadorPontuacao.forEach(function(jogador) { %>
                 <% if (jogador.timeId === partida.timeCasaId) { %>
-                    <p> <%= jogador.nomeJogador %></p>
-                    <p><%= jogador.horaMomentoPontuacao %></p>
+                  <div class="row" style="background-color: #22223b; border-bottom: solid 2.0px #18181d; padding: 2px; margin-left: 1px;
+                  margin-right: 1px;">
+                    <div class="col-4" style="text-align: center;">
+                     <%= jogador.nomeJogador %>
+                    </div>
+                    <div class="col-7" style="text-align: center;">
+                    <%= jogador.horaMomentoPontuacao %>
+                  </div></div>
                 <% } %>
             <% }); %>
         <% } else { %>
