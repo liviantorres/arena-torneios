@@ -69,10 +69,10 @@
 }
 </style>
 </head>
-<body>
+<body style=" background-color: #161642;">
     
   <div id="overlay5">
-    <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 800px; height: 470px; background-color:
+    <div class="container text-light col-lg-3 position-relative" style="margin-top: 100px; width: 850px; height: 470px; background-color:
        #262633; padding: 20px; ">
        <img id="pontuadorTimeForaFechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
       <form >
@@ -93,21 +93,27 @@
          <% if (partida.jogadorPontuacao && Array.isArray(partida.jogadorPontuacao) && partida.jogadorPontuacao.length > 0) { %>
             <% partida.jogadorPontuacao.forEach(function(jogador) { %>
                 <% if (jogador.timeId === partida.timeCasaId) { %>
-                    <p> <%= jogador.nomeJogador %></p>
-                    <p><%= jogador.horaMomentoPontuacao %></p>
+                  <div class="row" style="background-color: #22223b; border-bottom: solid 2.0px #18181d; padding: 2px; margin-left: 1px;
+                  margin-right: 1px;">
+                    <div class="col-4" style="text-align: center;">
+                     <%= jogador.nomeJogador %>
+                    </div>
+                    <div class="col-7" style="text-align: center;">
+                    <%= jogador.horaMomentoPontuacao %>
+                  </div></div>
                 <% } %>
             <% }); %>
         <% } else { %>
-            <p>Nenhum pontuador na partida</p>
+           <center style="margin-top: 100px;"> Nenhum pontuador na partida</center>
         <% } %>
         </div>
-      <div class="d-grid gap-2 col-12 mx-auto">
+      <div class="d-grid gap-2 col-6 mx-auto">
         <button class="btn btn-warning" type="button" id="pontuadorAdcTimeFora" style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
           <b>ADICIONAR PONTUADOR</b></button>
       </div>
       </form>
     </div>
-  </div>
+  
 
   
   <div id="overlay3">
