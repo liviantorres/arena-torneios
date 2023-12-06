@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('User', {
     nome: {type: String, unique: true},
-    avatar: String,
+    selectedAvatar: String,
     email: String,
     senha: String,
     campeonatos: [{

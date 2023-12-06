@@ -1,4 +1,4 @@
-// config inicial
+
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -6,13 +6,31 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const mongoose = require('mongoose');
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+const userRoutes = require('./routes/userRoutes')
+const jogadorRoutes = require('./routes/JogadorRoutes')
+const timeRoutes = require('./routes/TimeRoutes')
+const campeonatoRoutes = require('./routes/CampeonatoRoutes')
+const partidaRoutes = require('./routes/PartidaRoutes')
+const pontuadorRoutes = require('./routes/PontuadorRoutes')
+
+const verificaAutenticacao = (req, res, next) => {
+    if (req.session.user) {
+      next();
+    } else {
+      res.redirect('/');
+    }
+};
+
 
 app.use(bodyParser.urlencoded({extended:true}))
 
 app.use(session({
     name:'session',
     secret: 'livianm',
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, 
     saveUninitialized: true
 }));
   
@@ -21,51 +39,22 @@ app.use(express.static(path.join(__dirname, '../Front-end/imagens')));
 app.set("view engine", "ejs");
 app.set("views", "../Front-end/views");
 
-//forma de ler JSON / middlewares
 app.use(
     express.urlencoded({
         extended: true,
     }),
 );
-// Middleware para verificar autenticação
-const verificaAutenticacao = (req, res, next) => {
-    if (req.session.user) {
-      next();
-    } else {
-      // Se não estiver autenticado, redirecione para a página de login
-      res.redirect('/');
-    }
-  };
-  
- /* // Rota protegida que usa o middleware de verificação de autenticação
-  app.get('/restrito', verificaAutenticacao, (req, res) => {
-    res.send('Esta é uma rota protegida!');
-  });
-*/
 
 app.use(express.json());
-
-const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
-
-
-// rotas api
-const userRoutes = require('./routes/userRoutes')
-const jogadorRoutes = require('./routes/JogadorRoutes')
-const timeRoutes = require('./routes/TimeRoutes')
-const campeonatoRoutes = require('./routes/CampeonatoRoutes')
-const partidaRoutes = require('./routes/PartidaRoutes')
-const pontuadorRoutes = require('./routes/PontuadorRoutes')
 
 app.use('/usuario', verificaAutenticacao, userRoutes)
 app.use('/jogador', verificaAutenticacao, jogadorRoutes)
 app.use('/time', verificaAutenticacao, timeRoutes)
 app.use('/campeonato', verificaAutenticacao, campeonatoRoutes)
-//app.use('/campeonato', campeonatoRoutes)
 app.use('/partida', verificaAutenticacao, partidaRoutes)
 app.use('/pontuador', verificaAutenticacao, pontuadorRoutes)
 
-// rota inicial 
+
 app.get('/', (req, res) =>{
     if(req.session.login){
         res.render('teste')
@@ -139,8 +128,6 @@ app.post('/register', async (req, res) => {
         return
     }
 
-
-    // Verifica se o email já existe no sistema
     try {
             const user = await User.findOne({email});
             if(user){
@@ -155,14 +142,24 @@ app.post('/register', async (req, res) => {
     }
 
     try {
-        //criando dados 
         await User.create(user)
-
         res.redirect('/')
     } catch (error) {
         res.status(500).json({error: error})
     }
 })
+
+app.get('/logout', (req, res) => {
+
+    req.session.destroy(err => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erro ao fazer logout');
+      } else {
+        res.redirect('/');
+      }
+    });
+});
 
 app.get('/sobre-nos', (req, res)=>{
     res.render('./telasobre')
@@ -172,7 +169,6 @@ app.get('/contato', (req, res)=>{
     res.render('./telacontato')
 })
 
-// entregar uma porta
 const DB_USER = 'livian';
 const DB_PASSWORD = encodeURIComponent('qb6VGWopKAjkIexc')
 

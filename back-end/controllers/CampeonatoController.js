@@ -35,6 +35,7 @@ const criarCampeonato = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 async function adicionarPartidasAoCampeonato(campeonatoId, quantidadeTimes) {
   const partidasVazias = gerarPartidasVazias(quantidadeTimes, campeonatoId);
 
@@ -57,7 +58,6 @@ function gerarPartidasVazias(quantidadeTimes, campeonatoId) {
 
   return partidasVazias;
 }
-
 
 const excluirCampeonato = async (req, res) => {
     const id = req.params.id
@@ -86,58 +86,24 @@ const excluirCampeonato = async (req, res) => {
     }
 }
 
-/*
-const excluirCampeonato = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-      const campeonato = await Campeonato.findOne({ _id: id });
-
-      if (!campeonato) {
-          res.status(422).json({ message: 'Campeonato não existe' });
-          return;
-      }
-
-      // Encontrar e excluir todos os times associados ao campeonato
-      await Time.deleteMany({ campeonatoId: id });
-
-      // Encontrar todas as partidas associadas ao campeonato
-      const partidasCampeonato = await Partida.find({ campeonatoId: id });
-
-      // Excluir todas as partidas associadas ao campeonato
-      await partidasCampeonato.deleteMany({ campeonatoId: id });
-
-      // Excluir o próprio campeonato
-      await campeonato.deleteOne({ _id: id });
-
-      res.status(200).json({ message: 'Campeonato removido com sucesso' });
-
-  } catch (error) {
-      res.status(500).json({ error: error.message });
-  }
-};*/
-
 const editarCampeonato = async (req, res) => {
   const campeonatoId = req.params.id;
   
   const { nome, descricao, quantidade_times, premiacao, forma_competicao } = req.body;
 
   try {
-      // Verifique se o campeonato existe
       const campeonato = await Campeonato.findById(campeonatoId);
 
       if (!campeonato) {
           return res.status(404).json({ error: 'Campeonato não encontrado' });
       }
 
-      // Atualize os campos do campeonato
       campeonato.nome = nome;
       campeonato.descricao = descricao;
       campeonato.quantidade_times = quantidade_times;
       campeonato.premiacao = premiacao;
       campeonato.forma_competicao = forma_competicao;
 
-      // Salve as alterações no banco de dados
       await campeonato.save();
 
       res.status(200).json({ message: 'Campeonato editado com sucesso' });
@@ -152,7 +118,8 @@ const mostrarCampeonatos = async (req, res)=>{
 
       const usuario = await User.findOne({email: usuarioEmail});
       if(!usuario){
-        return res.status(404).json({error: 'Usuário não encontrado!'})
+
+        return res.redirect('/');
       }
        const campeonato = await Campeonato.find({usuarioId: usuario._id});
        

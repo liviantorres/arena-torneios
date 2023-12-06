@@ -51,11 +51,7 @@
   <div class="container-fluid d-flex flex-wrap justify-content-center my-4">
     <body>
       <nav class="navbar">
-          <div style="position: fixed; left: 200px; margin-top: -695px;">
-            <button onclick="goBack()" style="border: none; background: none;">
-              <img src="/botaovoltar.png" alt="Ícone do Figma">
-            </button>
-          </div>
+          
           <div>
             <button id="criarJogador" style="border: none; background: none; position: fixed ; right: 380px;  margin-top: -388px;">
               <img src="/botao+.png" alt="Ícone Figma" style="height: 65px; width: 117px;">
@@ -171,11 +167,10 @@
 
 
   function adicionarJogador() {
-    // Obtenha os dados do formulário
+    
     const form = document.getElementById('formAdicionarJogador');
     const formData = new FormData(form);
 
-    // Envie a solicitação POST
     fetch(form.action, {
         method: 'POST',
         body: formData
@@ -184,12 +179,12 @@
         if (!response.ok) {
           throw new Error(`Erro na solicitação: ${response.status}`);
         }
-        // Se a adição for bem-sucedida, recarregue a página
+       
         location.reload();
       })
       .catch(error => {
         console.error('Erro ao adicionar jogador:', error);
-        // Lide com o erro de acordo com suas necessidades
+       
       });
   }
 
