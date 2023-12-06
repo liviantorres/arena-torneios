@@ -148,16 +148,16 @@
   </div></div>
     <br>
 
-    <div class="container-xxl" style=" height: 490px; padding: 3px; background-color: #19192C; justify-content: center; align-items: center; text-align: center; margin-bottom: 20px;">
-      <div class="container text-center">
+    <div class="container-xxl" style=" height: 490px; padding: 3px; background-color: #19192C; justify-content: center; align-items: center;  margin-bottom: 20px;">
+      <div class="container">
           <div class="row align-items-start" style="color: white; background-color: #2C2C4A; padding: 10px;">
-            <div class="col">
+            <div class="col-md-2" style="text-align: center;">
               Campeonato
             </div>
-            <div class="col">
+            <div class="col-md-3" style="text-align: center;">
               Nome
             </div>
-            <div class="col">
+            <div class="col-md-3">
               Forma de Competição
             </div>
             <div class="col">
@@ -168,30 +168,30 @@
         <% if (campeonato.length> 0) { %>
           <% campeonato.forEach((campeonato, i)=> { %>
 
-            <div class="row" style="background-color: #2C2C4A; padding: 10px;">
-              <div class="col">
+            <div class="row" style="background-color: #22223d; padding: 10px; color: white;">
+              <div class="col-md-2" style="text-align: center;">
                 <%= i+1 %>
               </div>
-              <div class="col">
+              <div class="col-md-3" style="text-align: center;">
                 <a href="/campeonato/exibirCampeonato/<%=campeonato.id%>">
                   <%= campeonato.nome %>
                 </a>
               </div>
-              <div class="col">
+              <div class="col-md-2" style="text-align: center;">
                 <%= campeonato.forma_competicao %>
               </div>
-              <div class="col">
+              <div class="col" style="text-align: center;">
                 <%= campeonato.quantidade_times %>
               </div>
               
-              <div class="col">
+              <div class="col-md-1">
                 <a href="/campeonato/editar-campeonato/<%=campeonato._id%>">
                   <button type="submit" class="btn btn-warning">
                     Editar
                   </button>
                 </a>
                 </div>
-                <div class="col">
+                <div class="col-md-1">
                   <form method="POST" action="/campeonato/<%=campeonato.id%>?_method=DELETE"
                     onsubmit="return confirm('Tem certeza que deseja excluir o campeonato?');">
                     <button type="submit" class="btn btn-danger">
