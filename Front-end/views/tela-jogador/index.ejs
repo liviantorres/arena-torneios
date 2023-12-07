@@ -31,13 +31,13 @@
               <a href="/campeonato"><span style="color: #ccf03b;"> Meus Campeonatos</span>
               </a> >
             </ul>
-            <body>
+          
               
               <svg width="62" height="62" style="margin-left: 1650px; margin-top: -40px;" >
-                  <ellipse cx="31" cy="31" rx="31" ry="31" style="fill: Green;"  />
+                 < <ellipse cx="31" cy="31" rx="31" ry="31" style="fill: Green;"  />>
               </svg>
               
-          </body>
+         
           </span>
         </div>
       </div>
@@ -63,31 +63,31 @@
             </button>
           </div>
       </nav>
-      <div class="retangulo1" style="width: 1110px; height: 600px; padding: 10px; background-color: #19192C; justify-content: center; align-items: center; text-align: center;">
+      <div class="retangulo1" style="width: 1110px; height: 600px; padding: 10px; background-color: #19192C; justify-content: center; align-items: center; ">
         <h1 style="color: white; background-color: #2C2C4A; width: 1110px; margin: -10px; height: 55px;">
-          <span style="color: white; margin-left: 10px; font-size: 19px ;">Jogador</span>
-          <span style="color: white; margin-left:700px; font-size: 19px">Nome</span>
+          <span style="color: white; margin-left: 120px; font-size: 19px ;">Jogador</span>
+          <span style="color: white; margin-left:380px; font-size: 19px">Nome</span>
         </h1>
         <% if (time.jogadores.length> 0) { %>
           <% time.jogadores.forEach((jogador, i)=> { %>
-
-            <div class="row" style="background-color: #2C2C4A; padding: 10px; margin-right:-1px; right: -1px; margin-left: -10px; margin-right: -10px;">
-              <div class="col" style="color: white;">
+<br>
+            <div class="row" style="background-color: #1e1e38; padding: 10px; margin-right:-1px; right: -1px; margin-left: -10px; margin-right: -10px; margin-bottom: solid 0.8px #fff;">
+              <div class="col-md-3" style="color: white; text-align: center;">
                 <%= i+1 %>
               </div>
               <div class="col">
                 
-                  <p style="color: #ffff;"> <%= jogador.nome %></p>
+                  <p style="color: #ffff; text-align: center;"> <%= jogador.nome %></p>
                 
               </div>
-              <div class="col">
+              <div class="col-md-1">
                 
                   <button onclick="mostrarFormularioEdicao('<%= jogador._id %>', '<%= jogador.nome %>')" type="button" class="btn btn-warning">
                     Editar
                   </button>
                 
                 </div>
-                <div class="col">
+                <div class="col-md-1">
                   <form method="POST" action="/jogador/<%=jogador.id%>?_method=DELETE"
                     onsubmit="return confirm('Tem certeza que deseja excluir o jogador?');">
                     <button type="submit" class="btn btn-danger">
@@ -102,8 +102,8 @@
                 <% } %>
          </div>
       
-              <div id="overlay" style="display: none; margin-top: 50px; width: 1196px; height: 491px; background-color: #161642; padding: 70px; position: absolute;">
-        <div class="container text-light col-lg-3 position-absolute">
+              <div id="overlay" style="display: none; margin-top: 50px; width: 500px; height: 400px; background-color: #161642; padding: 40px; position: relative;">
+        <div class="container text-light position-relative">
           <img id="janelafechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
           <div class="perfil d-flex align-items-center ">
             <img src="/trofeubranco.png" alt="troféu">
@@ -135,7 +135,7 @@
 
 
       <div id="overlayAtualizar" style="display: none;">
-        <div class="container text-light col-lg-3 position-absolute" style="margin-top: 40px; width: 1196px; height: 491px; background-color: #161642; padding: 70px;">
+        <div class="container text-light col-lg-3 position-relative" style=" width: 500px; height: 380px; background-color: #161642; padding: 70px;">
           <img id="janelaAtualizarFechar" src="/x.png" alt="Fechar" style="position: absolute; top: 10px; right: 10px; width: 25px; height: 25px; cursor: pointer;">
           <div class="perfil d-flex align-items-center ">
             <img src="/trofeubranco.png" alt="troféu">
