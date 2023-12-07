@@ -36,6 +36,32 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', jogadorController.excluirJogador)
 
+
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const jogador = await Jogador.findOne({ _id: id });
+
+    if (!jogador) {
+      res.status(422).json({ message: 'Jogador não encontrado' });
+      return;
+    }
+
+    const timeJogador = await Time.findOne({ _id: jogador.timeId }).populate('jogadores');
+
+    if (timeJogador) {
+      timeJogador.jogadores.pull(jogador._id);
+      await timeJogador.save();
+    }
+
+    await Jogador.deleteOne({ _id: id });
+    res.redirect(`/jogador/${timeJogador._id}`);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
 router.get('/:id', async (req, res)=>{
     const timeId = req.params.id;
 
@@ -52,6 +78,30 @@ router.get('/:id', async (req, res)=>{
     res.status(500).json({ error: 'Erro interno do servidor.' });
   }
 })
+
+
+router.post('/criar-jogador/:id', async (req, res) => {
+  const timeId = req.params.id
+
+    try{ 
+      const { nome } = req.body;
+      const time = await Time.findOne({_id: timeId})
+      const jogador = new Jogador({
+          nome,
+          timeId: timeId,
+      });
+      
+      await jogador.save();
+      time.jogadores.push(jogador);
+      await time.save();
+
+      res.redirect(`/jogador/${timeId}`);
+
+  }catch(erro){
+  return res.status(404).json({ message: 'Time não encontrado' });
+  }
+})
+
 
 router.post('/', async (req, res) => {
    // const timeId = req.params.id

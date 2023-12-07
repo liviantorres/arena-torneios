@@ -71,9 +71,9 @@
                 <%= i+1 %>
               </div>
               <div class="col">
-                <a href="" style="color: white;">
-                  <%= jogador.nome %>
-                </a>
+                
+                  <p style="color: #ffff;"> <%= jogador.nome %></p>
+                
               </div>
               <div class="col">
                 
@@ -84,7 +84,7 @@
                 </div>
                 <div class="col">
                   <form method="POST" action="/jogador/<%=jogador.id%>?_method=DELETE"
-                    onsubmit="return confirm('Tem certeza que deseja excluir o campeonato?');">
+                    onsubmit="return confirm('Tem certeza que deseja excluir o jogador?');">
                     <button type="submit" class="btn btn-danger">
                       Excluir
                     </button>
@@ -108,7 +108,7 @@
           <div class="container">
             <div class="row ">
               <div class="col">
-                <form  id="formAdicionarJogador" action="/jogador/" method="post">
+                <form  id="formAdicionarJogador" action="/jogador/criar-jogador/<%=time._id%>" method="post">
                   <div class="mb-3">
                     <input type="hidden" name="timeId" value="<%= time._id %>">
                     <label class="form-label">Nome:</label>
@@ -120,6 +120,7 @@
                 <button class="btn btn-warning" type="submit" id="timesad"
                   style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
                   <b>ADICIONAR</b></button>
+               
               </div>
             </div>
           </form>
@@ -149,7 +150,7 @@
               <div class="d-grid gap-2 col-12 mx-auto">
                 <button class="btn btn-warning" type="submit" id="timesad"
                   style="color: #4d3601; --bs-btn-hover-bg: #A57300;">
-                  <b>ADICIONAR</b></button>
+                  <b>ATUALIZAR</b></button>
               </div>
             </div>
           </form>
@@ -165,28 +166,6 @@
 
 <script>
 
-
-  function adicionarJogador() {
-    
-    const form = document.getElementById('formAdicionarJogador');
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Erro na solicitação: ${response.status}`);
-        }
-       
-        location.reload();
-      })
-      .catch(error => {
-        console.error('Erro ao adicionar jogador:', error);
-       
-      });
-  }
 
   function showOverlay() {
     document.getElementById('overlay').style.display = 'flex';

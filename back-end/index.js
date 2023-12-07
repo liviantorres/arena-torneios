@@ -127,6 +127,7 @@ app.post('/register', async (req, res) => {
         res.render('./tela-registro', {error: 'A senha é obrigatória!'})
         return
     }
+    const selectedAvatar = 'http://localhost:3000/avatar1.png'
 
     try {
             const user = await User.findOne({email});
@@ -138,7 +139,7 @@ app.post('/register', async (req, res) => {
     }
 
     const user = {
-        nome, email, senha
+        nome, email, senha, selectedAvatar
     }
 
     try {

@@ -104,7 +104,7 @@ const excluirJogador = async (req, res) => {
       }
   
       await Jogador.deleteOne({_id: id})
-      res.render('./tela-jogador', {time : timeJogador})
+      res.redirect(`/jogador/${timeId}`)
       
     } catch (error) {
       res.status(500).json({error: error})
